@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cześć, tutaj Aneta! | Moda, City Breaks & Balans</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">ANETA<span>.pl</span></a>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+                <div class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#about-section" class="nav-link" onclick="showPage('home')">O mnie</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Kategorie <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="showPage('moda')">Moda & Styl</a></li>
+                        <li><a href="#" onclick="showPage('podroze')">City Breaks (Podróże)</a></li>
+                        <li><a href="#" onclick="showPage('aktywnie')">Aktywnie & Zdrowo</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="nav-link" onclick="showPage('wspolpraca')">Współpraca</a></li>
+                <li><a href="#footer-newsletter" class="nav-link">Kontakt</a></li>
+            </nav>
+        </div>
+    </header>
+
+    <main id="page-home">
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <h1>Moda, aktywne życie i szybkie podróże. Odkryj balans w wielkim mieście.</h1>
+                    <p>Znalazłaś się w przestrzeni dedykowanej nowoczesnym kobietom, które pragną czerpać z życia pełnymi garściami bez rezygnacji z wewnętrznego spokoju.</p>
+                    <button class="btn btn-accent" onclick="showPage('podroze')">Zacznij tutaj</button>
+                </div>
+                <div class="hero-image">
+                    <img src="woman_picadilly_circus_london.png" alt="Aneta w Londynie">
+                </div>
+            </div>
+        </section>
+
+        <section class="about-teaser" id="about-section">
+            <div class="container about-grid">
+                <div class="about-img">
+                    <img src="woman_evening_home_natural.png" alt="Aneta">
+                </div>
+                <div class="about-text">
+                    <h2>Cześć, tutaj Aneta! 👋</h2>
+                    <p>Miło, że wpadłaś do mojego świata! Mam 30 lat i na co dzień balansuję między intensywnym życiem zawodowym a pasjami, które napędzają mnie do działania.</p>
+                    <ul>
+                        <li><strong>Moda & Lifestyle:</strong> Stylowo każdego dnia, ceniąc wygodę.</li>
+                        <li><strong>Podróże city break:</strong> Szybkie, weekendowe odkrywanie Europy.</li>
+                        <li><strong>Aktywność & Self-care:</strong> Ruch dla czystej przyjemności na rolkach i rowerze.</li>
+                    </ul>
+                    <p>Rozgość się, zainspiruj i zostań na dłużej!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-section">
+            <div class="container">
+                <h2 class="section-title">Najnowsze na blogu</h2>
+                <div class="blog-grid" id="latest-posts-grid">
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="category-template-page" class="category-page">
+        <div class="container">
+            <div class="category-header">
+                <h1 id="cat-page-title">Nazwa Kategorii</h1>
+                <p id="cat-page-description">Opis kategorii...</p>
+            </div>
+            
+            <div class="subcategory-tabs" id="cat-page-tabs"></div>
+
+            <div class="articles-container" id="cat-articles-container"></div>
+        </div>
+    </div>
+
+    <div id="page-wspolpraca" class="cooperation-section">
+        <div class="container">
+            <div class="category-header">
+                <h1>Stwórzmy razem coś pięknego!</h1>
+                <p>Postaw na profesjonalną i kreatywną promocję Twojej marki w świecie lifestylowym.</p>
+            </div>
+            <div class="coop-grid">
+                <div>
+                    <h3 style="font-size: 22px; margin-bottom: 16px;">Kim są moi odbiorcy?</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 30px;">Moja społeczność to głównie aktywne, pracujące kobiety w wieku 25-35 lat, mieszkające w dużych miastach.</p>
+                    <button class="btn btn-accent"><i class="fa-solid fa-download"></i> Pobierz Media Kit (PDF)</button>
+                </div>
+                <div class="coop-metrics">
+                    <div class="metric-item"><div class="metric-label">Główna grupa docelowa</div><div class="metric-value">Kobiety 25-35 lat (84%)</div></div>
+                    <div class="metric-item"><div class="metric-label">Miesięczni Użytkownicy</div><div class="metric-value">45,000+ UU</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="instagram-section" id="insta-feed-section">
+        <div class="container">
+            <h2 class="section-title" style="margin-bottom: 10px;">@aneta.balansuje</h2>
+            <div class="insta-grid">
+                <div class="insta-item"><img src="woman_picadilly_circus_london.png" alt="1"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
+                <div class="insta-item"><img src="woman_sensual_bw_elegant.png" alt="2"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
+                <div class="insta-item"><img src="woman_rollerblading_polish_park.png" alt="3"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
+                <div class="insta-item"><img src="woman_evening_home_natural.png" alt="4"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="footer-newsletter">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="newsletter-form">
+                    <h3>Dołącz do mojego newslettera</h3>
+                    <div class="input-group">
+                        <input type="email" placeholder="Twój adres e-mail">
+                        <button class="btn">Zapisz się</button>
+                    </div>
+                </div>
+                <div class="footer-socials">
+                    <div class="social-icons">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 14px; color: #aaaaaa;">kontakt@anetamalinowska.pl</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ANETA.pl. Wszystkie prawa zastrzeżone.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/database.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
