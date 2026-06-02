@@ -1,5 +1,9 @@
-/* --- ZMIENNE I RESET --- */
+/* ==========================================================================
+   1. ZMIENNE I TRYBY (CSS VARIABLES)
+   ========================================================================== */
+
 :root {
+    /* Jasny motyw (Domyślny) */
     --bg-color: #fcfcfc;
     --card-bg: #ffffff;
     --text-color: #2d2d2d;
@@ -8,18 +12,25 @@
     --hero-bg: #f9f9f6;
     --tip-bg: #fdfbf7;
     
+    /* Akcenty kolorystyczne */
     --accent-lime: #d4f242;
     --accent-lime-hover: #bada1e;
     --accent-butter: #fdf5e2;
     --accent-pink: #fbcbc9;
     --accent-terracotta: #e07a5f;
+    --accent-teal: #1ed3da;
+    --logo-green: #8cd4b4;
     
     --white: #ffffff;
     --max-width: 1200px;
     --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-[data-theme="dark"] {
+/* Tryb Ciemny - Zaawansowane i potrójnie zabezpieczone mapowanie zmiennych */
+body.dark-mode, 
+body.dark,
+[data-theme="dark"],
+html[data-theme="dark"] body {
     --bg-color: #121212;
     --card-bg: #1e1e1e;
     --text-color: #e0e0e0;
@@ -29,7 +40,12 @@
     --tip-bg: #252422;
     --accent-butter: #2d2a22; 
     --accent-pink: #422d2c;
+    --white: #1e1e1e;
 }
+
+/* ==========================================================================
+   2. RESET I STYLE GLOBALNE
+   ========================================================================== */
 
 * {
     margin: 0;
@@ -39,6 +55,7 @@
 
 html {
     scroll-behavior: smooth;
+    background-color: var(--bg-color);
 }
 
 body {
@@ -75,6 +92,19 @@ li {
     padding: 0 24px;
 }
 
+.section-title {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: -0.5px;
+    color: var(--text-color);
+}
+
+/* ==========================================================================
+   3. ELEMENTY INTERFEJSU (BUTTONS & BADGES)
+   ========================================================================== */
+
 .btn {
     display: inline-block;
     padding: 14px 32px;
@@ -100,9 +130,9 @@ li {
 }
 
 .btn-accent {
-    background-color: var(--accent-lime);
+    background-color: var(--accent-teal);
     color: #121212;
-    border-color: var(--accent-lime);
+    border-color: var(--accent-teal);
 }
 
 .btn-accent:hover {
@@ -111,15 +141,10 @@ li {
     border-color: var(--text-color);
 }
 
-.section-title {
-    font-size: 36px;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 40px;
-    letter-spacing: -0.5px;
-}
+/* ==========================================================================
+   4. NAWIGACJA (HEADER & NAVBAR)
+   ========================================================================== */
 
-/* --- STICKY NAVIGATION --- */
 .header {
     position: sticky;
     top: 0;
@@ -136,18 +161,6 @@ li {
     justify-content: space-between;
     align-items: center;
     height: 80px;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    cursor: pointer;
-}
-
-.logo span {
-    color: var(--accent-terracotta);
-    font-weight: 800;
 }
 
 .nav-right {
@@ -179,39 +192,30 @@ li {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: var(--accent-terracotta);
+    background-color: var(--accent-teal);
     transform-origin: bottom right;
     transition: transform 0.3s ease-out;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after, 
+.nav-link.active::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover, 
+.nav-link.active {
     color: var(--text-color);
 }
 
-.theme-toggle {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 18px;
+.menu-toggle {
+    display: none;
+    font-size: 24px;
     cursor: pointer;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    border-radius: 50%;
+    color: var(--text-color);
 }
 
-.theme-toggle:hover {
-    background-color: var(--border-color);
-    transform: rotate(30deg) scale(1.1);
-}
-
+/* --- DROPDOWN MENU --- */
 .dropdown {
     position: relative;
 }
@@ -253,12 +257,129 @@ li {
     padding-left: 18px;
 }
 
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
+/* ==========================================================================
+   5. LOGOTYP (LOGO STYLES)
+   ========================================================================== */
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 10px;
+    transition: opacity 0.2s ease;
+}
+
+.logo-link:hover {
+    opacity: 0.85;
+}
+
+.site-logo,
+.logo-link svg,
+.logo-face {
+    height: 45px;
+    width: auto;
+    display: block;
     color: var(--text-color);
 }
+
+.logo-text-main {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-color);
+    letter-spacing: -0.5px;
+}
+
+.logo-text-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--logo-green);
+    margin-left: 5px;
+}
+
+/* Kompatybilność z zewnętrznymi sztywnymi SVG */
+body.dark-mode .logo-link img,
+body.dark .logo-link img {
+    filter: invert(1) brightness(2);
+}
+
+/* ==========================================================================
+   6. PRZYCISK ZMIANY MOTYWU (THEME TOGGLE)
+   ========================================================================== */
+
+.theme-toggle,
+.theme-btn {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.theme-toggle:hover,
+.theme-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: var(--text-muted);
+}
+
+/* Animacja i logika ikon Słońce / Księżyc */
+.theme-btn-icon {
+    font-size: 18px;
+    position: absolute;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+}
+
+.theme-toggle .sun-icon,
+.theme-btn .sun-icon { 
+    opacity: 0; 
+    transform: translateY(20px); 
+}
+
+.theme-toggle .moon-icon,
+.theme-btn .moon-icon { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+/* Zmiany wizualne przycisku i dynamicznych ikon w Dark Mode */
+body.dark-mode .theme-toggle,
+body.dark-mode .theme-btn,
+body.dark .theme-toggle,
+body.dark .theme-btn,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .theme-btn {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--accent-lime);
+}
+
+body.dark-mode .sun-icon,
+body.dark .sun-icon,
+html[data-theme="dark"] .sun-icon { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+body.dark-mode .moon-icon,
+body.dark .moon-icon,
+html[data-theme="dark"] .moon-icon { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+}
+
+/* ==========================================================================
+   7. SEKCJE STRONY (HERO, ABOUT, BLOG)
+   ========================================================================== */
 
 /* --- HERO SECTION --- */
 .hero {
@@ -280,6 +401,7 @@ li {
     margin-bottom: 24px;
     font-weight: 700;
     letter-spacing: -1px;
+    color: var(--text-color);
 }
 
 .hero-content p {
@@ -337,6 +459,7 @@ li {
 .about-text h2 {
     font-size: 34px;
     margin-bottom: 20px;
+    color: var(--text-color);
 }
 
 .about-text p {
@@ -442,6 +565,7 @@ li {
     font-weight: 700;
     margin-bottom: 12px;
     line-height: 1.4;
+    color: var(--text-color);
 }
 
 .post-card:hover .post-title {
@@ -453,7 +577,10 @@ li {
     color: var(--text-muted);
 }
 
-/* --- STRONA KATEGORII (PODSTRONY SPA) --- */
+/* ==========================================================================
+   8. ARTYKUŁY I WIDOKI PODSTRON (SPA / CATEGORIES)
+   ========================================================================== */
+
 .category-page {
     display: none;
     padding: 60px 0 100px 0;
@@ -468,6 +595,11 @@ li {
 .category-header h1 {
     font-size: 42px;
     margin-bottom: 16px;
+    color: var(--text-color);
+}
+
+.category-header p {
+    color: var(--text-muted);
 }
 
 .subcategory-tabs {
@@ -518,6 +650,7 @@ li {
     box-shadow: 0 4px 20px rgba(0,0,0,0.01);
     border: 1px solid var(--border-color);
     transition: var(--transition);
+    color: var(--text-color);
 }
 
 .article-long h2 {
@@ -526,6 +659,7 @@ li {
     border-left: 5px solid var(--accent-terracotta);
     padding-left: 15px;
     line-height: 1.3;
+    color: var(--text-color);
 }
 
 .article-long h3 {
@@ -548,6 +682,7 @@ li {
     list-style: square;
     margin-bottom: 8px;
     font-size: 15px;
+    color: var(--text-color);
 }
 
 .aneta-tip {
@@ -557,9 +692,10 @@ li {
     margin: 25px 0;
     font-style: italic;
     border-radius: 0 8px 8px 0;
+    color: var(--text-color);
 }
 
-/* Elementy boksów wewnątrz artykułu (np. o kolorach) */
+/* Elementy boksów wewnątrz artykułu */
 .color-showcase {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -579,55 +715,140 @@ li {
     box-shadow: 0 15px 30px rgba(0,0,0,0.05);
 }
 
-.box-butter { background-color: var(--accent-butter); color: var(--text-color); }
-.box-butter:hover { border-color: #f4e3b1; }
+.box-butter { 
+    background-color: var(--accent-butter); 
+    color: var(--text-color); 
+}
+.box-butter:hover { 
+    border-color: var(--accent-terracotta); 
+}
 
-.box-lime { background-color: rgba(212, 242, 66, 0.08); border: 1px solid rgba(212, 242, 66, 0.3); }
-.box-lime:hover { background-color: rgba(212, 242, 66, 0.15); border-color: var(--accent-lime); }
+.box-lime { 
+    background-color: rgba(212, 242, 66, 0.08); 
+    border: 1px solid rgba(212, 242, 66, 0.3); 
+    color: var(--text-color);
+}
+.box-lime:hover { 
+    background-color: rgba(212, 242, 66, 0.15); 
+    border-color: var(--accent-lime); 
+}
 
-/* --- WSPÓŁPRACA --- */
+/* ==========================================================================
+   9. SEKCJA WSPÓŁPRACY (COOPERATION)
+   ========================================================================== */
+
 .cooperation-section {
-    display: none;
-    padding: 80px 0;
+    display: none; 
+    padding: 100px 0;
+    background-color: var(--bg-color); 
+    transition: var(--transition);
+}
+
+.cooperation-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+}
+
+.cooperation-header h2 {
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 16px;
+}
+
+.cooperation-header .subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
 }
 
 .coop-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.1fr 0.9fr;
     gap: 60px;
     align-items: center;
 }
 
-.coop-metrics {
-    background-color: var(--card-bg);
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
+.coop-content h3 {
+    font-size: 28px;
+    color: var(--text-color);
+    margin-bottom: 24px;
 }
 
-.metric-item {
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-color);
+.coop-content p {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.coop-content .italic-text {
+    font-style: italic;
+    color: var(--accent-terracotta);
+    margin-bottom: 32px;
+}
+
+.btn-lime-download {
+    background-color: var(--accent-lime);
+    color: #121212;
+    border-color: var(--accent-lime);
+}
+
+.btn-lime-download:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-color: var(--text-color);
+}
+
+.coop-features-card {
+    background-color: var(--card-bg); 
+    border: 1px solid var(--border-color);
+    padding: 45px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
     transition: var(--transition);
 }
 
-.metric-item:hover {
-    padding-left: 8px;
-    border-bottom-color: var(--accent-terracotta);
+body.dark-mode .coop-features-card,
+body.dark .coop-features-card,
+html[data-theme="dark"] .coop-features-card {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
 }
 
-.metric-value {
-    font-size: 30px;
+.feature-item {
+    margin-bottom: 30px;
+}
+
+.feature-item:last-child {
+    margin-bottom: 0;
+}
+
+.feature-item h4 {
+    font-size: 18px;
     font-weight: 700;
-    color: var(--accent-terracotta);
+    color: var(--text-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* --- INSTAGRAM FEED --- */
+.feature-item p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding-left: 28px; 
+}
+
+/* ==========================================================================
+   10. INSTAGRAM FEED
+   ========================================================================== */
+
 .instagram-section {
     padding: 60px 0;
     background-color: var(--card-bg);
     border-top: 1px solid var(--border-color);
+    transition: var(--transition);
 }
 
 .insta-grid {
@@ -652,7 +873,7 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--white);
+    color: #ffffff;
     opacity: 0;
     transition: var(--transition);
 }
@@ -660,15 +881,25 @@ li {
 .insta-item:hover .insta-overlay { opacity: 1; }
 .insta-item:hover img { transform: scale(1.1) rotate(-1deg); }
 
-/* --- FOOTER & NEWSLETTER --- */
+/* ==========================================================================
+   11. STOPKA I NEWSLETTER (FOOTER)
+   ========================================================================== */
+
 .footer {
     background-color: #161616;
     color: #ffffff;
     padding: 80px 0 40px 0;
 }
 
-.footer .section-title, .footer h3, .footer h4 { color: #ffffff; }
-.footer p { color: #aaaaaa; }
+.footer .section-title, 
+.footer h3, 
+.footer h4 { 
+    color: #ffffff; 
+}
+
+.footer p { 
+    color: #aaaaaa; 
+}
 
 .footer-grid {
     display: grid;
@@ -696,14 +927,44 @@ li {
     color: #ffffff;
 }
 
-.input-group input:focus { outline: none; }
-.input-group .btn { background-color: var(--accent-lime); color: #111111; border: none; }
-.input-group .btn:hover { background-color: var(--white); color: #111111; transform: none; }
+.input-group input:focus { 
+    outline: none; 
+}
 
-.footer-socials { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
-.social-icons { display: flex; gap: 20px; margin-top: 15px; }
-.social-icons a { font-size: 22px; color: #aaa; }
-.social-icons a:hover { color: var(--accent-lime); transform: translateY(-4px) scale(1.1); }
+.input-group .btn { 
+    background-color: var(--accent-lime); 
+    color: #111111; 
+    border: none; 
+}
+
+.input-group .btn:hover { 
+    background-color: #ffffff; 
+    color: #111111; 
+    transform: none; 
+}
+
+.footer-socials { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: flex-end; 
+    justify-content: center; 
+}
+
+.social-icons { 
+    display: flex; 
+    gap: 20px; 
+    margin-top: 15px; 
+}
+
+.social-icons a { 
+    font-size: 22px; 
+    color: #aaa; 
+}
+
+.social-icons a:hover { 
+    color: var(--accent-lime); 
+    transform: translateY(-4px) scale(1.1); 
+}
 
 .footer-bottom {
     border-top: 1px solid #222;
@@ -714,22 +975,64 @@ li {
     color: #666;
 }
 
-/* --- RESPONSYWNOŚĆ --- */
+/* ==========================================================================
+   12. MEDIA QUERIES (RESPONSIVE DESIGN)
+   ========================================================================== */
+
 @media (max-width: 992px) {
-    .hero-grid, .about-grid, .blog-grid, .coop-grid, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-    .hero-content, .about-text { text-align: center; }
-    .hero-image img, .about-img img { height: 400px; }
-    .footer-socials { align-items: center; }
-    .insta-grid { grid-template-columns: repeat(2, 1fr); }
-    .color-showcase { grid-template-columns: 1fr; }
+    .hero-grid, 
+    .about-grid, 
+    .blog-grid, 
+    .coop-grid, 
+    .footer-grid { 
+        grid-template-columns: 1fr; 
+        gap: 40px; 
+    }
+    .hero-content, 
+    .about-text { 
+        text-align: center; 
+    }
+    .hero-image img, 
+    .about-img img { 
+        height: 400px; 
+    }
+    .footer-socials { 
+        align-items: center; 
+    }
+    .insta-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .color-showcase { 
+        grid-template-columns: 1fr; 
+    }
 }
 
 @media (max-width: 768px) {
-    .menu-toggle { display: block; }
-    .nav-menu {
-        position: fixed; top: 80px; left: -100%; width: 100%; height: calc(100vh - 80px);
-        background-color: var(--bg-color); flex-direction: column; padding: 40px 24px; gap: 24px; transition: var(--transition);
+    .menu-toggle { 
+        display: block; 
     }
-    .nav-menu.active { left: 0; }
-    .dropdown-menu { position: static; transform: none; box-shadow: none; background: transparent; border: none; opacity: 1; display: block; }
+    .nav-menu {
+        position: fixed; 
+        top: 80px; 
+        left: -100%; 
+        width: 100%; 
+        height: calc(100vh - 80px);
+        background-color: var(--bg-color); 
+        flex-direction: column; 
+        padding: 40px 24px; 
+        gap: 24px; 
+        transition: var(--transition);
+    }
+    .nav-menu.active { 
+        left: 0; 
+    }
+    .dropdown-menu { 
+        position: static; 
+        transform: none; 
+        box-shadow: none; 
+        background: transparent; 
+        border: none; 
+        opacity: 1; 
+        display: block; 
+    }
 }

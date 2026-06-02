@@ -14,14 +14,20 @@
 
     <header class="header">
         <div class="container nav-container">
-            <a href="#" class="logo" onclick="showPage('home')">ANETA<span>.pl</span></a>
+            <a href="index.html" class="logo-link">
+                <img src="logo.svg" alt="Aneta Malinowska Logo" class="site-logo">
+            </a>
+            
             <div class="nav-right">
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                <button id="theme-toggle" class="theme-btn" aria-label="Zmień motyw">
+                    <i id="themeIcon" class="fa-solid fa-moon theme-btn-icon moon-icon"></i>
                 </button>
-                <div class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
             </div>
-            <nav class="nav-menu" id="navMenu">
+
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
                 <li><a href="#about-section" class="nav-link" onclick="showPage('home')">O mnie</a></li>
                 <li class="dropdown">
@@ -34,12 +40,13 @@
                 </li>
                 <li><a href="#" class="nav-link" onclick="showPage('wspolpraca')">Współpraca</a></li>
                 <li><a href="#footer-newsletter" class="nav-link">Kontakt</a></li>
-            </nav>
+            </ul>
         </div>
     </header>
 
-    <main id="page-home">
-        <section class="hero">
+    <main>
+        <!-- SEKCJA HOME -->
+        <section id="page-home">
             <div class="container hero-grid">
                 <div class="hero-content">
                     <h1>Moda, aktywne życie i szybkie podróże. Odkryj balans w wielkim mieście.</h1>
@@ -50,80 +57,110 @@
                     <img src="woman_picadilly_circus_london.png" alt="Aneta w Londynie">
                 </div>
             </div>
-        </section>
-
-        <section class="about-teaser" id="about-section">
-            <div class="container about-grid">
-                <div class="about-img">
-                    <img src="woman_evening_home_natural.png" alt="Aneta">
+            
+            <div class="about-teaser" id="about-section">
+                <div class="container about-grid">
+                    <div class="about-img">
+                        <img src="woman_evening_home_natural.png" alt="Aneta">
+                    </div>
+                    <div class="about-text">
+                        <h2>Cześć, tutaj Aneta! 👋</h2>
+                        <p>Miło, że wpadłaś do mojego świata! Mam 30 lat i na co dzień balansuję między intensywnym życiem zawodowym a pasjami, które napędzają mnie do działania.</p>
+                        <ul>
+                            <li><strong>Moda & Lifestyle:</strong> Stylowo każdego dnia, ceniąc wygodę.</li>
+                            <li><strong>Podróże city break:</strong> Szybkie, weekendowe odkrywanie Europy.</li>
+                            <li><strong>Aktywność & Self-care:</strong> Ruch dla czystej przyjemności na rolkach i rowerze.</li>
+                        </ul>
+                        <p>Rozgość się, zainspiruj i zostań na dłużej!</p>
+                    </div>
                 </div>
-                <div class="about-text">
-                    <h2>Cześć, tutaj Aneta! 👋</h2>
-                    <p>Miło, że wpadłaś do mojego świata! Mam 30 lat i na co dzień balansuję między intensywnym życiem zawodowym a pasjami, które napędzają mnie do działania.</p>
-                    <ul>
-                        <li><strong>Moda & Lifestyle:</strong> Stylowo każdego dnia, ceniąc wygodę.</li>
-                        <li><strong>Podróże city break:</strong> Szybkie, weekendowe odkrywanie Europy.</li>
-                        <li><strong>Aktywność & Self-care:</strong> Ruch dla czystej przyjemności na rolkach i rowerze.</li>
-                    </ul>
-                    <p>Rozgość się, zainspiruj i zostań na dłużej!</p>
+            </div>
+
+            <div class="blog-section">
+                <div class="container">
+                    <h2 class="section-title">Najnowsze na blogu</h2>
+                    <div class="blog-grid" id="latest-posts-grid"></div>
                 </div>
             </div>
         </section>
 
-        <section class="blog-section">
+        <!-- SZABLON STRONY KATEGORII (SPA) -->
+        <section id="category-template-page" class="category-page">
             <div class="container">
-                <h2 class="section-title">Najnowsze na blogu</h2>
-                <div class="blog-grid" id="latest-posts-grid">
+                <div class="category-header">
+                    <h1 id="cat-page-title">Nazwa Kategorii</h1>
+                    <p id="cat-page-description">Opis kategorii...</p>
+                </div>
+                <div class="subcategory-tabs" id="cat-page-tabs"></div>
+                <div class="articles-container" id="cat-articles-container"></div>
+            </div>
+        </section>
+
+        <!-- SEKCJA WSPÓŁPRACY -->
+        <section id="page-wspolpraca" class="cooperation-section">
+            <div class="container">
+                <div class="cooperation-header">
+                    <h2>Stwórzmy razem coś pięknego!</h2>
+                    <p class="subtitle">Nowy projekt na mapie polskiego lifestyle'u. Świeże spojrzenie, unikalna estetyka.</p>
+                </div>
+
+                <div class="coop-grid">
+                    <!-- LEWA STRONA -->
+                    <div class="coop-content">
+                        <h3>Dlaczego warto dołączyć już teraz?</h3>
+                        <p>@aneta.balansuje to nowo narodzony koncept lifestylowy, budowany od pierwszego dnia wokół zaangażowanej niszowej społeczności...</p>
+                        <p class="italic-text">Dla marek, które uwierzą w projekt na starcie, przygotowałam dedykowane...</p>
+                        <a href="#" class="btn btn-lime-download">
+                            <i class="fa-solid fa-download"></i> POBIERZ MEDIA KIT (PDF)
+                        </a>
                     </div>
+
+                    <!-- PRAWA STRONA -->
+                    <div class="coop-features-card">
+                        <div class="feature-item">
+                            <h4>💎 Estetyka bez kompromisów</h4>
+                            <p>Każda współpraca otrzymuje autorską oprawę fotograficzną i unikalną grafikę...</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>🎯 Maksymalna widoczność (Brak szumu)</h4>
+                            <p>Twój produkt będzie lśnił na pierwszym planie. Ograniczam liczbę współprac...</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>⚡ Elastyczność i zaangażowanie</h4>
+                            <p>Jako startujący twórca oferuję pełne zaangażowanie w proces kreatywny...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <div id="category-template-page" class="category-page">
-        <div class="container">
-            <div class="category-header">
-                <h1 id="cat-page-title">Nazwa Kategorii</h1>
-                <p id="cat-page-description">Opis kategorii...</p>
-            </div>
-            
-            <div class="subcategory-tabs" id="cat-page-tabs"></div>
-
-            <div class="articles-container" id="cat-articles-container"></div>
-        </div>
-    </div>
-
-    <div id="page-wspolpraca" class="cooperation-section">
-        <div class="container">
-            <div class="category-header">
-                <h1>Stwórzmy razem coś pięknego!</h1>
-                <p>Postaw na profesjonalną i kreatywną promocję Twojej marki w świecie lifestylowym.</p>
-            </div>
-            <div class="coop-grid">
-                <div>
-                    <h3 style="font-size: 22px; margin-bottom: 16px;">Kim są moi odbiorcy?</h3>
-                    <p style="color: var(--text-muted); margin-bottom: 30px;">Moja społeczność to głównie aktywne, pracujące kobiety w wieku 25-35 lat, mieszkające w dużych miastach.</p>
-                    <button class="btn btn-accent"><i class="fa-solid fa-download"></i> Pobierz Media Kit (PDF)</button>
-                </div>
-                <div class="coop-metrics">
-                    <div class="metric-item"><div class="metric-label">Główna grupa docelowa</div><div class="metric-value">Kobiety 25-35 lat (84%)</div></div>
-                    <div class="metric-item"><div class="metric-label">Miesięczni Użytkownicy</div><div class="metric-value">45,000+ UU</div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- INSTAGRAM FEED -->
     <section class="instagram-section" id="insta-feed-section">
         <div class="container">
-            <h2 class="section-title" style="margin-bottom: 10px;">@aneta.balansuje</h2>
+            <h2 class="section-title">@aneta.balansuje</h2>
             <div class="insta-grid">
-                <div class="insta-item"><img src="woman_picadilly_circus_london.png" alt="1"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
-                <div class="insta-item"><img src="woman_sensual_bw_elegant.png" alt="2"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
-                <div class="insta-item"><img src="woman_rollerblading_polish_park.png" alt="3"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
-                <div class="insta-item"><img src="woman_evening_home_natural.png" alt="4"><div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div></div>
+                <div class="insta-item">
+                    <img src="woman_picadilly_circus_london.png" alt="1">
+                    <div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="woman_sensual_bw_elegant.png" alt="2">
+                    <div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="woman_rollerblading_polish_park.png" alt="3">
+                    <div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div>
+                </div>
+                <div class="insta-item">
+                    <img src="woman_evening_home_natural.png" alt="4">
+                    <div class="insta-overlay"><i class="fa-brands fa-instagram fa-2xl"></i></div>
+                </div>
             </div>
         </div>
     </section>
 
+    <!-- STOPKA -->
     <footer class="footer" id="footer-newsletter">
         <div class="container">
             <div class="footer-grid">
@@ -144,11 +181,12 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 ANETA.pl. Wszystkie prawa zastrzeżone.</p>
+                <p>&copy; 2026 @aneta.balansuje Wszystkie prawa zastrzeżone.</p>
             </div>
         </div>
     </footer>
 
+    <!-- SKRYPTY SYSTEMOWE -->
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
 </body>

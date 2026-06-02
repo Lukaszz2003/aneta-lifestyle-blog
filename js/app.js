@@ -1,4 +1,32 @@
-// --- 1. Renderowanie Strony Głównej (3 najnowsze posty) ---
+/* ==========================================================================
+   1. OBSŁUGA MOTYWU (DARK / LIGHT MODE)
+   ========================================================================== */
+
+// Funkcja synchronizująca ikony i stan localStorage na podstawie klasy body
+function syncTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('themeIcon');
+    
+    if (!themeToggle || !themeIcon) return;
+
+    if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+        themeIcon.className = 'fa-solid fa-sun theme-btn-icon sun-icon';
+    } else {
+        localStorage.setItem('theme', 'light');
+        themeIcon.className = 'fa-solid fa-moon theme-btn-icon moon-icon';
+    }
+}
+
+// Inicjalizacja motywu przed pełnym załadowaniem DOM (zapobiega miganiu strony)
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+}
+
+/* ==========================================================================
+   2. RENDEROWANIE STRONY GŁÓWNEJ (3 najnowsze posty)
+   ========================================================================== */
+
 function renderHomePage() {
     const grid = document.getElementById('latest-posts-grid');
     if (!grid) return;
@@ -30,7 +58,10 @@ function renderHomePage() {
     });
 }
 
-// --- 2. Renderowanie Podstron Kategori z Systemem Zakładek ---
+/* ==========================================================================
+   3. RENDEROWANIE PODSTRON KATEGORII Z SYSTEMEM ZAKŁADEK
+   ========================================================================== */
+
 function renderCategoryPage(catKey, selectedSubcat = "Wszystko") {
     const data = categoryData[catKey];
     if (!data) return;
@@ -40,17 +71,20 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko") {
 
     // Generowanie przełączników zakładek (Tabs)
     const tabsContainer = document.getElementById('cat-page-tabs');
-    tabsContainer.innerHTML = '';
-    data.tabs.forEach(tabName => {
-        const tab = document.createElement('span');
-        tab.className = `tab ${tabName === selectedSubcat ? 'active' : ''}`;
-        tab.innerText = tabName;
-        tab.onclick = () => renderCategoryPage(catKey, tabName);
-        tabsContainer.appendChild(tab);
-    });
+    if (tabsContainer) {
+        tabsContainer.innerHTML = '';
+        data.tabs.forEach(tabName => {
+            const tab = document.createElement('span');
+            tab.className = `tab ${tabName === selectedSubcat ? 'active' : ''}`;
+            tab.innerText = tabName;
+            tab.onclick = () => renderCategoryPage(catKey, tabName);
+            tabsContainer.appendChild(tab);
+        });
+    }
 
     // Filtrowanie oraz renderowanie artykułów z bazy danych
     const articlesContainer = document.getElementById('cat-articles-container');
+    if (!articlesContainer) return;
     articlesContainer.innerHTML = '';
 
     const filteredArticles = articles.filter(art => {
@@ -72,58 +106,76 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko") {
     });
 }
 
-// --- 3. Mechanizm Routera SPA (Przełączanie stron w locie) ---
+/* ==========================================================================
+   4. MECHANIZM ROUTERA SPA (Przełączanie stron w locie)
+   ========================================================================== */
+
 function showPage(pageId) {
-    document.getElementById('page-home').style.display = 'none';
-    document.getElementById('page-wspolpraca').style.display = 'none';
-    document.getElementById('category-template-page').style.display = 'none';
+    // Ukrywanie wszystkich głównych kontenerów widoków
+    const homePage = document.getElementById('page-home');
+    const coopPage = document.getElementById('page-wspolpraca');
+    const templatePage = document.getElementById('category-template-page');
+    const instaFeed = document.getElementById('insta-feed-section');
+
+    if (homePage) homePage.style.display = 'none';
+    if (coopPage) coopPage.style.display = 'none';
+    if (templatePage) templatePage.style.display = 'none';
     
+    // Logika wyświetlania konkretnej sekcji i sterowania sekcją Instagrama
     if (pageId === 'home') {
-        document.getElementById('page-home').style.display = 'block';
-        document.getElementById('insta-feed-section').style.display = 'block';
+        if (homePage) homePage.style.display = 'block';
+        if (instaFeed) instaFeed.style.display = 'block';
     } else if (pageId === 'wspolpraca') {
-        document.getElementById('page-wspolpraca').style.display = 'block';
-        document.getElementById('insta-feed-section').style.display = 'none';
+        if (coopPage) coopPage.style.display = 'block';
+        if (instaFeed) instaFeed.style.display = 'none';
     } else {
-        document.getElementById('category-template-page').style.display = 'block';
-        document.getElementById('insta-feed-section').style.display = 'none';
+        if (templatePage) templatePage.style.display = 'block';
+        if (instaFeed) instaFeed.style.display = 'none';
         renderCategoryPage(pageId, "Wszystko");
     }
 
-    // Aktualizacja podświetlenia linków w Menu
+    // Aktualizacja wizualnego podświetlenia linków w menu nawigacyjnym
     const links = document.querySelectorAll('.nav-link');
     links.forEach(link => link.classList.remove('active'));
     
     const activeLink = Array.from(links).find(link => link.getAttribute('onclick')?.includes(`'${pageId}'`));
     if (activeLink) activeLink.classList.add('active');
     
-    // Zamknięcie menu mobilnego po kliknięciu
-    document.getElementById('navMenu').classList.remove('active');
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    // Zamknięcie menu mobilnego po kliknięciu i płynny powrót na górę strony
+    const navMenu = document.getElementById('navMenu');
+    if (navMenu) navMenu.classList.remove('active');
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- 4. Przełącznik Trybu Ciemnego (Dark Mode) ---
-function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const themeIcon = document.getElementById('themeIcon');
-    let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+/* ==========================================================================
+   5. MENU MOBILNE
+   ========================================================================== */
 
-    document.documentElement.setAttribute('data-theme', newTheme);
-    themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    localStorage.setItem('theme', newTheme);
-}
-
-// --- 5. Menu Mobilne ---
 function toggleMenu() {
-    document.getElementById('navMenu').classList.toggle('active');
+    const navMenu = document.getElementById('navMenu');
+    if (navMenu) {
+        navMenu.classList.toggle('active');
+    }
 }
 
-// --- 6. Inicjalizacja Aplikacji po załadowaniu DOM ---
+/* ==========================================================================
+   6. INICJALIZACJA NASŁUCHIWACZY I ZDARZEŃ DOM
+   ========================================================================== */
+
 window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+    // 1. Synchronizacja wizualna motywu na podstawie wcześniejszego kroku wczytania
+    syncTheme();
+
+    // 2. Obsługa kliknięcia w przycisk zmiany motywu
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            syncTheme();
+        });
     }
+
+    // 3. Renderowanie startowe postów na stronie głównej
     renderHomePage();
 });
