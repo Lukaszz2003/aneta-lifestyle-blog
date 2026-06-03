@@ -2,7 +2,6 @@
    1. OBSŁUGA MOTYWU (DARK / LIGHT MODE)
    ========================================================================== */
 
-// Funkcja synchronizująca ikony i stan localStorage na podstawie klasy body
 function syncTheme() {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('themeIcon');
@@ -18,43 +17,53 @@ function syncTheme() {
     }
 }
 
-// Inicjalizacja motywu przed pełnym załadowaniem DOM (zapobiega miganiu strony)
 if (localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
 }
 
 /* ==========================================================================
-   2. RENDEROWANIE STRONY GŁÓWNEJ (3 najnowsze posty)
+   2. RENDEROWANIE KART ARTYKUŁÓW NA STRONIE GŁÓWNEJ
    ========================================================================== */
 
-function renderHomePage() {
-    const grid = document.getElementById('latest-posts-grid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    
-    // Pobieramy 3 najnowsze wpisy z bazy danych
-    const latest = articles.slice(0, 3);
-    
-    latest.forEach(art => {
-        const badgeColor = art.category === 'podroze' ? 'var(--accent-pink)' : (art.category === 'aktywnie' ? '#aae0fa' : 'var(--accent-lime)');
-        // Pobiera czysty tekst kategorii bez emoji na początku
-        const catLabel = categoryData[art.category].title.split(' ').pop(); 
+function renderLatestStories() {
+    const container = document.getElementById("stories-container");
+    if (!container) return;
 
-        const card = document.createElement('div');
-        card.className = 'post-card';
-        card.onclick = () => showPage(art.category);
-        card.innerHTML = `
-            <div class="post-img">
-                <img src="${art.image}" alt="${art.title}">
-                <span class="post-category" style="background-color: ${badgeColor}">${catLabel}</span>
-            </div>
-            <div class="post-content">
-                <span class="post-date">${art.date}</span>
-                <h3 class="post-title">${art.title}</h3>
-                <p class="post-excerpt">${art.excerpt}</p>
-            </div>
+    container.innerHTML = "";
+
+    if (typeof articles === 'undefined') {
+        console.error("Błąd: Tablica 'articles' nie została odnaleziona.");
+        return;
+    }
+
+    articles.forEach(article => {
+        let tagClass = "tag-style";
+        let displayCategory = "Styl";
+
+        if (article.category === "podroze") {
+            tagClass = "tag-breaks";
+            displayCategory = "Breaks";
+        } else if (article.category === "aktywnie") {
+            tagClass = "tag-zdrowo";
+            displayCategory = "Zdrowo";
+        }
+
+        const cardHTML = `
+            <article class="story-card" onclick="openArticle('${article.id}')">
+                <div class="story-img-wrapper">
+                    <img src="${article.image}" alt="${article.title}" class="story-img">
+                    <span class="story-category ${tagClass}">${displayCategory}</span>
+                </div>
+                <div class="story-content">
+                    <span class="story-date">${article.date}</span>
+                    <h3 class="story-title">${article.title}</h3>
+                    <p class="story-excerpt">${article.excerpt}</p>
+                    <span class="story-read-more">Czytaj artykuł <i class="fa-solid fa-arrow-right-long"></i></span>
+                </div>
+            </article>
         `;
-        grid.appendChild(card);
+
+        container.innerHTML += cardHTML;
     });
 }
 
@@ -63,11 +72,17 @@ function renderHomePage() {
    ========================================================================== */
 
 function renderCategoryPage(catKey, selectedSubcat = "Wszystko") {
+    if (typeof categoryData === 'undefined' || typeof articles === 'undefined') return;
+    
     const data = categoryData[catKey];
     if (!data) return;
 
-    document.getElementById('cat-page-title').innerText = data.title;
-    document.getElementById('cat-page-description').innerText = data.description;
+    // Pobieranie elementów nagłówka
+    const titleEl = document.getElementById('cat-page-title');
+    const descEl = document.getElementById('cat-page-description');
+    
+    if (titleEl) titleEl.innerText = data.title;
+    if (descEl) descEl.innerText = data.description;
 
     // Generowanie przełączników zakładek (Tabs)
     const tabsContainer = document.getElementById('cat-page-tabs');
@@ -75,7 +90,11 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko") {
         tabsContainer.innerHTML = '';
         data.tabs.forEach(tabName => {
             const tab = document.createElement('span');
+            // Nadajemy klasy stylów dla zakładek (załóż klasę 'tab' i 'active' w CSS)
             tab.className = `tab ${tabName === selectedSubcat ? 'active' : ''}`;
+            tab.style.cursor = 'pointer';
+            tab.style.padding = '8px 20px';
+            tab.style.borderBottom = tabName === selectedSubcat ? '2px solid var(--text-main, #000)' : 'none';
             tab.innerText = tabName;
             tab.onclick = () => renderCategoryPage(catKey, tabName);
             tabsContainer.appendChild(tab);
@@ -94,24 +113,81 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko") {
     });
 
     if (filteredArticles.length === 0) {
-        articlesContainer.innerHTML = `<p style="text-align:center; color: var(--text-muted); padding: 40px 0;">W tej podkategorii nie ma jeszcze artykułów. Nowe wpisy pojawią się już wkrótce!</p>`;
+        articlesContainer.innerHTML = `<p style="text-align:center; color: #888; padding: 40px 0; width: 100%;">W tej podkategorii nie ma jeszcze artykułów. Nowe wpisy pojawią się już wkrótce!</p>`;
         return;
     }
 
     filteredArticles.forEach(art => {
         const articleBlock = document.createElement('article');
         articleBlock.className = 'article-long';
+        articleBlock.style.marginBottom = '60px';
         articleBlock.innerHTML = art.htmlContent;
         articlesContainer.appendChild(articleBlock);
     });
 }
 
 /* ==========================================================================
-   4. MECHANIZM ROUTERA SPA (Przełączanie stron w locie)
+   4. SYSTEM OTWIERANIA POJEDYNCZYCH ARTYKUŁÓW (CZYTNIK)
+   ========================================================================== */
+
+function openArticle(articleId) {
+    if (typeof articles === 'undefined') return;
+
+    const article = articles.find(art => art.id === articleId);
+    if (!article) return;
+
+    const categoryNames = {
+        moda: "Moda & Lifestyle",
+        podroze: "City Breaks",
+        aktywnie: "Active Self-care"
+    };
+
+    const viewCategory = document.getElementById("post-view-category");
+    const viewDate = document.getElementById("post-view-date");
+    const viewTitle = document.getElementById("post-view-title");
+    const viewBody = document.getElementById("post-view-body");
+
+    if (viewCategory) viewCategory.innerText = categoryNames[article.category] || article.category;
+    if (viewDate) viewDate.innerText = article.date;
+    if (viewTitle) viewTitle.innerText = article.title;
+    if (viewBody) viewBody.innerHTML = article.htmlContent;
+
+    // Chowanie standardowych widoków SPA
+    const homePage = document.getElementById('page-home');
+    const templatePage = document.getElementById('category-template-page');
+    const articleView = document.getElementById("page-article-view");
+    const instaFeed = document.getElementById('insta-feed-section');
+
+    if (homePage) homePage.style.display = "none";
+    if (templatePage) templatePage.style.display = "none";
+    if (instaFeed) instaFeed.style.display = "none";
+    
+    if (articleView) {
+        articleView.style.display = "block";
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    }
+}
+
+function closeArticle() {
+    const homePage = document.getElementById('page-home');
+    const articleView = document.getElementById("page-article-view");
+    const instaFeed = document.getElementById('insta-feed-section');
+
+    if (articleView) articleView.style.display = "none";
+    if (homePage) homePage.style.display = "block";
+    if (instaFeed) instaFeed.style.display = "block";
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ==========================================================================
+   5. ROUTER STRONY SPA (PRZEŁĄCZANIE STRON GŁÓWNYCH)
    ========================================================================== */
 
 function showPage(pageId) {
-    // Ukrywanie wszystkich głównych kontenerów widoków
+    const articleView = document.getElementById("page-article-view");
+    if (articleView) articleView.style.display = "none";
+
     const homePage = document.getElementById('page-home');
     const coopPage = document.getElementById('page-wspolpraca');
     const templatePage = document.getElementById('category-template-page');
@@ -121,7 +197,6 @@ function showPage(pageId) {
     if (coopPage) coopPage.style.display = 'none';
     if (templatePage) templatePage.style.display = 'none';
     
-    // Logika wyświetlania konkretnej sekcji i sterowania sekcją Instagrama
     if (pageId === 'home') {
         if (homePage) homePage.style.display = 'block';
         if (instaFeed) instaFeed.style.display = 'block';
@@ -129,19 +204,19 @@ function showPage(pageId) {
         if (coopPage) coopPage.style.display = 'block';
         if (instaFeed) instaFeed.style.display = 'none';
     } else {
+        // Dynamiczne wywołanie szablonu podstrony dla: 'moda', 'podroze', 'aktywnie'
         if (templatePage) templatePage.style.display = 'block';
         if (instaFeed) instaFeed.style.display = 'none';
         renderCategoryPage(pageId, "Wszystko");
     }
 
-    // Aktualizacja wizualnego podświetlenia linków w menu nawigacyjnym
+    // Podświetlanie linków w menu nawigacyjnym
     const links = document.querySelectorAll('.nav-link');
     links.forEach(link => link.classList.remove('active'));
     
     const activeLink = Array.from(links).find(link => link.getAttribute('onclick')?.includes(`'${pageId}'`));
     if (activeLink) activeLink.classList.add('active');
     
-    // Zamknięcie menu mobilnego po kliknięciu i płynny powrót na górę strony
     const navMenu = document.getElementById('navMenu');
     if (navMenu) navMenu.classList.remove('active');
     
@@ -149,7 +224,7 @@ function showPage(pageId) {
 }
 
 /* ==========================================================================
-   5. MENU MOBILNE
+   6. MENU MOBILNE & DOM CONTENT LOADED
    ========================================================================== */
 
 function toggleMenu() {
@@ -159,15 +234,9 @@ function toggleMenu() {
     }
 }
 
-/* ==========================================================================
-   6. INICJALIZACJA NASŁUCHIWACZY I ZDARZEŃ DOM
-   ========================================================================== */
-
 window.addEventListener('DOMContentLoaded', () => {
-    // 1. Synchronizacja wizualna motywu na podstawie wcześniejszego kroku wczytania
     syncTheme();
 
-    // 2. Obsługa kliknięcia w przycisk zmiany motywu
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
@@ -176,6 +245,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Renderowanie startowe postów na stronie głównej
-    renderHomePage();
+    // Wygeneruj karty na stronie głównej przy starcie
+    renderLatestStories();
 });
