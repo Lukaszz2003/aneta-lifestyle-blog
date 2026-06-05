@@ -248,3 +248,10 @@ window.addEventListener('DOMContentLoaded', () => {
     // Wygeneruj karty na stronie głównej przy starcie
     renderLatestStories();
 });
+
+document.querySelector('.dropdown').addEventListener('click', function(e) {
+    if (window.innerWidth <= 768) {
+        e.stopPropagation(); // Zapobiega dziwnym zachowaniom kliknięcia
+        this.classList.toggle('active');
+    }
+});
