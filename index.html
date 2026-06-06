@@ -41,7 +41,7 @@
                         <li><a href="#" onclick="showPage('podroze')">City Breaks</a></li>
                         <li><a href="#" onclick="showPage('aktywnie')">Aktywnie & Zdrowo</a></li>
                     </ul>
-                </li>
+                </disable_item>
                 <li><a href="#" class="nav-link" onclick="showPage('wspolpraca')">Współpraca</a></li>
                 <li><a href="#footer-newsletter" class="nav-link">Kontakt</a></li>
             </ul>
@@ -49,10 +49,8 @@
     </header>
 
     <main>
-        <!-- STRONA GŁÓWNA -->
         <section id="page-home" class="fade-in-element">
             
-            <!-- ORYGINALNA SEKCJA HERO (UKŁAD MAGAZYNOWY) -->
             <div class="magazine-layout">
                 <div class="container">
                     <div class="magazine-hero-row">
@@ -91,27 +89,26 @@
                             <p>Rozgość się, zainspiruj i zostań na dłużej! Znajdziesz tu moją osobistą definicję nowoczesnego miejskiego rytmu.</p>
                         </div>
                         
-                      <!-- Dolna połowa bento (Kafelki tematów) -->
-<div class="card-topic bg-hover-pink" onclick="showPage('moda')">
-    <div class="bento-topic-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-    <h3>Moda & Lifestyle</h3>
-    <p>Stylowo każdego dnia, ceniąc jakość i wygodę.</p>
-    <span class="bento-link">Zobacz stylizacje <i class="fa-solid fa-arrow-right-long"></i></span>
-</div>
+                        <div class="card-topic bg-hover-pink" onclick="showPage('moda')">
+                            <div class="bento-topic-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <h3>Moda & Lifestyle</h3>
+                            <p>Stylowo każdego dnia, ceniąc jakość i wygodę.</p>
+                            <span class="bento-link">Zobacz stylizacje <i class="fa-solid fa-arrow-right-long"></i></span>
+                        </div>
 
-<div class="card-topic bg-hover-teal" onclick="showPage('podroze')">
-    <div class="bento-topic-icon"><i class="fa-solid fa-compass"></i></div>
-    <h3>City Breaks</h3>
-    <p>Szybkie, weekendowe odkrywanie najpiękniejszych zakątków Europy.</p>
-    <span class="bento-link">Ruszaj w drogę <i class="fa-solid fa-arrow-right-long"></i></span>
-</div>
+                        <div class="card-topic bg-hover-teal" onclick="showPage('podroze')">
+                            <div class="bento-topic-icon"><i class="fa-solid fa-compass"></i></div>
+                            <h3>City Breaks</h3>
+                            <p>Szybkie, weekendowe odkrywanie najpiękniejszych zakątków Europy.</p>
+                            <span class="bento-link">Ruszaj w drogę <i class="fa-solid fa-arrow-right-long"></i></span>
+                        </div>
 
-<div class="card-topic bg-hover-lime" onclick="showPage('aktywnie')">
-    <div class="bento-topic-icon"><i class="fa-solid fa-bicycle"></i></div>
-    <h3>Active Self-care</h3>
-    <p>Ruch dla czystej przyjemności i resetu. Rolki, rower, oddech.</p>
-    <span class="bento-link">Znajdź balans <i class="fa-solid fa-arrow-right-long"></i></span>
-</div>
+                        <div class="card-topic bg-hover-lime" onclick="showPage('aktywnie')">
+                            <div class="bento-topic-icon"><i class="fa-solid fa-bicycle"></i></div>
+                            <h3>Active Self-care</h3>
+                            <p>Ruch dla czystej przyjemności i resetu. Rolki, rower, oddech.</p>
+                            <span class="bento-link">Znajdź balans <i class="fa-solid fa-arrow-right-long"></i></span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -141,10 +138,12 @@
         </section>
 
         <section id="page-article-view" class="article-single-view fade-in-element" style="display: none;">
-            <div class="container">
-                <button class="btn-back" onclick="closeArticle()">
-                    <i class="fa-solid fa-arrow-left-long"></i> Powrót do bloga
+            <div class="container article-single-container">
+                
+                <button class="btn-back-blog" onclick="closeArticle()">
+                    <span class="arrow">&larr;</span> Powrót do bloga
                 </button>
+                
                 <article class="full-article-content">
                     <div class="article-meta-header">
                         <span id="post-view-category" class="story-category"></span>
@@ -186,7 +185,7 @@
                             <div class="feat-num">02</div>
                             <div class="feat-body">
                                 <h4>Maksymalna widoczność</h4>
-                                <p>Twój produkt będzie lśnił na pierwszym planie. Rygorystycznie ograniczam liczbę współprac, eliminując szum reklamowy.</p>
+                                <p>Twój product będzie lśnił na pierwszym planie. Rygorystycznie ograniczam liczbę współprac, eliminując szum reklamowy.</p>
                             </div>
                         </div>
                         <div class="premium-feature-card">

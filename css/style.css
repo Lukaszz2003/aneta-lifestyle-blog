@@ -180,6 +180,7 @@ body.dark-mode .premium-header {
     display: flex;
     align-items: center;
     gap: 40px;
+    position: relative;
 }
 
 .nav-link {
@@ -246,25 +247,36 @@ body.dark-mode .premium-header {
     transform: rotate(180deg); 
 }
 
-.dropdown-menu {
+.dropdown-menu, 
+.dropdown .submenu,
+.dropdown > ul {
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%) translateY(15px);
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 12px;
+    padding: 15px 0;
     min-width: 200px;
     display: none;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
     opacity: 0;
     transition: var(--transition);
+    z-index: 9999;
 }
 
 .dropdown:hover .dropdown-menu {
     display: block;
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu li,
+.dropdown .submenu a {
+    display: block;
+    padding: 10px 20px;
+    margin: 0;
+    white-space: nowrap;
 }
 
 .dropdown-menu li a {
@@ -452,7 +464,7 @@ body.dark-mode .site-logo {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center; /* Gwarantuje idealny kadr na każdym urządzeniu */
+    object-position: top center; 
     display: block;
     transition: transform 0.5s ease;
 }
@@ -552,7 +564,7 @@ body.dark-mode .site-logo {
     transform: translateX(6px);
 }
 
-/* Kolorystyczne akcenty kafelków po najechaniu (naprawione za pomocą klas) */
+/* Kolorystyczne akcenty kafelków po najechaniu */
 .card-topic.bg-hover-pink:hover { 
     background-color: rgba(251, 203, 201, 0.15); 
 }
@@ -625,7 +637,7 @@ body.dark-mode .site-logo {
     letter-spacing: 1px;
     padding: 6px 14px;
     font-weight: 600;
-    transition: color 0.4s ease; /* Płynne przejście zmiany koloru tekstu */
+    transition: color 0.4s ease; 
 }
 
 .tag-style { 
@@ -685,11 +697,11 @@ body.dark-mode .site-logo {
 
 /* --- FIX KONTRASTU DLA TRYBU CIEMNEGO --- */
 body.dark-mode .story-category {
-    color: #ffffff; /* Tekst na etykietach staje się biały i czytelny na ciemniejszych tłach */
+    color: #ffffff; 
 }
 
 /* ==========================================================================
-   10. ARTYKUŁY I PODSTRONY PREMIUM (DLA TABÓW KATEGORII)
+   10. ARTYKUŁY I PODSTRONY PREMIUM (LISTA I WIDOK KATEGORII)
    ========================================================================== */
 
 .category-articles-grid {
@@ -712,6 +724,144 @@ body.dark-mode .story-category {
     border-left: 2px solid var(--text-color);
     padding: 32px;
     margin: 30px 0;
+}
+
+/* --- KONTENER DLA POJEDYNCZEGO WIDOKU ARTYKUŁU (ZAPOBIEGA NAKŁADANIU STOPKI) --- */
+.article-single-container {
+    padding-bottom: 80px;
+}
+
+/* --- PRZYCISK POWROTU Z ANIMACJĄ STRZAŁKI W LEWO --- */
+.btn-back-blog {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px 0;
+    margin-bottom: 40px;
+    transition: color 0.3s ease;
+}
+
+.btn-back-blog .arrow {
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 10px;
+    line-height: 1;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-back-blog:hover {
+    color: var(--text-muted);
+}
+
+.btn-back-blog:hover .arrow {
+    transform: translateX(-6px);
+}
+
+/* --- WYSTYLIZOWANA LISTA DYNAMICZNYCH ARTYKUŁÓW W KATEGORIACH --- */
+.article-long-wrapper {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    margin-bottom: 60px;
+    width: 100%;
+}
+
+.article-long-wrapper .story-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 480px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    border-radius: 0px; 
+}
+
+.article-long-wrapper .story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.article-long-wrapper .story-image-wrapper:hover .story-img {
+    transform: scale(1.02);
+}
+
+.article-long-wrapper .story-meta {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+.article-long-wrapper .story-category {
+    font-weight: 700;
+    color: var(--text-color);
+    position: relative;
+}
+
+.article-long-wrapper .story-title {
+    font-size: 2.2rem;
+    font-weight: 400; 
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.article-long-wrapper .story-title:hover {
+    color: var(--text-muted);
+}
+
+.article-long-wrapper .story-excerpt {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text-color);
+    margin-bottom: 24px;
+    opacity: 0.9;
+}
+
+.article-long-wrapper .btn-read-more {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    border-bottom: 2px solid var(--text-color);
+    padding: 4px 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.article-long-wrapper .btn-read-more i {
+    transition: transform 0.3s ease;
+}
+
+.article-long-wrapper .btn-read-more:hover {
+    color: var(--text-muted);
+    border-bottom-color: var(--text-muted);
+}
+
+.article-long-wrapper .btn-read-more:hover i {
+    transform: translateX(6px);
 }
 
 /* ==========================================================================
@@ -1110,7 +1260,7 @@ body.dark-mode .story-category {
         gap: 24px; 
         transition: var(--transition);
         z-index: 999;
-        overflow-y: auto; /* Zabezpieczenie, gdyby rozwijane menu nie mieściło się na ekranie */
+        overflow-y: auto; 
         align-items: center;
         justify-content: flex-start;
     }
@@ -1119,7 +1269,7 @@ body.dark-mode .story-category {
         left: 0; 
     }
 
-    /* --- FIX SUBMENU MOBILNEGO (Dla efektu ze zdjęcia image_7c72c1.png) --- */
+    /* --- FIX SUBMENU MOBILNEGO --- */
     .dropdown {
         width: 100%;
         text-align: center;
@@ -1128,7 +1278,6 @@ body.dark-mode .story-category {
         align-items: center;
     }
 
-    /* Sprawiamy, że na mobile menu rozwija się "wewnątrz" struktury, zamiast wisieć nad tekstem */
     .dropdown-menu {
         position: relative;
         top: 0;
@@ -1139,11 +1288,10 @@ body.dark-mode .story-category {
         box-shadow: none;
         padding: 10px 0 0 0;
         width: 100%;
-        display: none; /* Domyślnie schowane */
+        display: none; 
         opacity: 1;
     }
 
-    /* Klasa aktywowana kliknięciem na smartfonie, która czysto rozsuwa widok */
     .dropdown.active .dropdown-menu {
         display: block;
     }
@@ -1156,7 +1304,7 @@ body.dark-mode .story-category {
     }
 
     .dropdown-menu li a:hover {
-        background-color: transparent; /* Usunięcie desktopowego podświetlenia tła */
+        background-color: transparent; 
         color: var(--text-color);
     }
     /* --- KONIEC FIXU SUBMENU --- */
@@ -1198,4 +1346,61 @@ body.dark-mode .story-category {
         padding: 24px;
         min-height: 180px;
     }
+}
+
+/* ==========================================================================
+   16. PAGINACJA (STRONICOWANIE PREMIUM)
+   ========================================================================== */
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 50px 0 70px 0;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+}
+
+.pagination-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 8px 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 0px; /* Minimalistyczny, ostry styl */
+}
+
+.pagination-btn.active {
+    background: var(--text-color);
+    border-color: var(--text-color);
+    color: var(--bg-color);
+    font-weight: 600;
+}
+
+.pagination-btn.prev-next {
+    padding: 8px 18px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    gap: 8px;
+}
+
+.pagination-btn:hover:not(.active) {
+    border-color: var(--text-color);
+    background: var(--hero-bg);
+}
+
+body.dark-mode .pagination-btn:hover:not(.active) {
+    background: #222;
 }
