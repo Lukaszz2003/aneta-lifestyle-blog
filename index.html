@@ -41,7 +41,7 @@
                         <li><a href="#" onclick="showPage('podroze')">City Breaks</a></li>
                         <li><a href="#" onclick="showPage('aktywnie')">Aktywnie & Zdrowo</a></li>
                     </ul>
-                </disable_item>
+                </li>
                 <li><a href="#" class="nav-link" onclick="showPage('wspolpraca')">Współpraca</a></li>
                 <li><a href="#footer-newsletter" class="nav-link">Kontakt</a></li>
             </ul>
@@ -124,14 +124,15 @@
             </section>
         </section>
 
+        <!-- Sekcja szablonu kategorii: style inline przeniesione do klas (zgodnie z czystym kodem z pliku image_f1d1e4.png) -->
         <section id="category-template-page" class="stories-section fade-in-element" style="display: none;">
             <div class="container">
-                <div class="category-page-header" style="text-align: center; margin-bottom: 40px;">
-                    <h1 id="cat-page-title" class="editorial-title" style="font-size: 3rem; margin-bottom: 15px;"></h1>
-                    <p id="cat-page-description" class="editorial-lead" style="max-width: 700px; margin: 0 auto; color: var(--text-muted);"></p>
+                <div class="category-page-header">
+                    <h1 id="cat-page-title" class="editorial-title"></h1>
+                    <p id="cat-page-description" class="editorial-lead"></p>
                 </div>
 
-                <div class="category-tabs-wrapper" id="cat-page-tabs" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap;"></div>
+                <div class="category-tabs-wrapper" id="cat-page-tabs"></div>
 
                 <div id="cat-articles-container" class="category-articles-grid"></div>
             </div>
@@ -169,7 +170,7 @@
                         
                         <a href="#" class="btn-premium-download">
                             <span class="btn-text">Pobierz Media Kit (PDF)</span>
-                            <span class="btn-icon"><i class="fa-solid fa-arrow-down"></i></span>
+                            <span class="btn-text btn-icon"><i class="fa-solid fa-arrow-down"></i></span>
                         </a>
                     </div>
                     

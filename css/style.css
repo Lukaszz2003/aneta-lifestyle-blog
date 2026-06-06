@@ -676,9 +676,10 @@ body.dark-mode .site-logo {
 
 .story-excerpt {
     font-size: 14px;
-    color: var(--text-muted);
+    color: #ddcdcd;
     line-height: 1.6;
     margin-bottom: 16px;
+    text-align: justify;
 }
 
 .story-read-more {

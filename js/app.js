@@ -161,7 +161,7 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko", page = 1) {
             <h2 class="story-title" onclick="openArticle('${art.id}')" style="cursor: pointer; font-size: 2rem; margin-bottom: 15px; font-family: inherit;">
                 ${art.title}
             </h2>
-            <p class="story-excerpt" style="font-size: 1.1rem; color: #444; line-height: 1.6; margin-bottom: 20px;">
+            <p class="story-excerpt" style="font-size: 1.1rem; color: #ddcdcd; line-height: 1.6; margin-bottom: 20px;">
                 ${art.excerpt}
             </p>
             <button class="btn-read-more" onclick="openArticle('${art.id}')" style="background: none; border: none; border-bottom: 1px solid #000; padding: 5px 0; font-weight: 600; cursor: pointer; font-size: 1rem;">
