@@ -39,11 +39,11 @@ body.dark-mode {
     --tip-bg: #1a1917;
     --white: #141414;
 
-    /* Poprawione akcenty dla trybu ciemnego (głębsze, szlachetne odcienie) */
+    /* Poprawione akcenty dla trybu ciemnego */
     --accent-butter: #4a3e21; 
-    --accent-pink: #612d2b;     /* Ciemny, elegancki róż */
-    --accent-teal: #105b5e;     /* Głęboki morski */
-    --accent-lime: #495416;     /* Zgaszona, ciemna limonka */
+    --accent-pink: #612d2b; 
+    --accent-teal: #105b5e; 
+    --accent-lime: #495416; 
 }
 
 /* ==========================================================================
@@ -201,7 +201,7 @@ body.dark-mode .premium-header {
     height: 1px;
     bottom: 0;
     left: 0;
-    background-color: #e30ce9;
+    background-color: var(--text-color); /* Usunięto jaskrawy fuksjowy na rzecz koloru tekstu motywu */
     transform-origin: bottom right;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -451,7 +451,6 @@ body.dark-mode .site-logo {
     gap: 32px;
 }
 
-/* Górna połowa: zdjęcie 50% i tekst powitalny 50% */
 .card-main-img { 
     grid-column: auto / span 3; 
     grid-row: 1; 
@@ -498,7 +497,6 @@ body.dark-mode .site-logo {
     line-height: 1.65;
 }
 
-/* Dolna połowa: trzy równe boksy kategorii */
 .card-topic {
     grid-row: 2;
     grid-column: auto / span 2;
@@ -536,6 +534,7 @@ body.dark-mode .site-logo {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 6px;
+    color:#938f8f
 }
 
 .card-topic p {
@@ -554,6 +553,7 @@ body.dark-mode .site-logo {
     align-items: center;
     gap: 8px;
     margin-top: auto;
+    color: #998585
 }
 
 .bento-link i {
@@ -564,7 +564,6 @@ body.dark-mode .site-logo {
     transform: translateX(6px);
 }
 
-/* Kolorystyczne akcenty kafelków po najechaniu */
 .card-topic.bg-hover-pink:hover { 
     background-color: rgba(251, 203, 201, 0.15); 
 }
@@ -676,7 +675,7 @@ body.dark-mode .site-logo {
 
 .story-excerpt {
     font-size: 14px;
-    color: #ddcdcd;
+    color: #2c2c2c; 
     line-height: 1.6;
     margin-bottom: 16px;
     text-align: justify;
@@ -696,7 +695,6 @@ body.dark-mode .site-logo {
     transform: translateY(-8px);
 }
 
-/* --- FIX KONTRASTU DLA TRYBU CIEMNEGO --- */
 body.dark-mode .story-category {
     color: #ffffff; 
 }
@@ -705,12 +703,69 @@ body.dark-mode .story-category {
    10. ARTYKUŁY I PODSTRONY PREMIUM (LISTA I WIDOK KATEGORII)
    ========================================================================== */
 
-.category-articles-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
+.category-articles-grid,
+.category-header,
+[id*="category"] {
+    text-align: center !important;
     max-width: 850px;
     margin: 0 auto;
+}
+
+.category-articles-grid p,
+.category-header p {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Filtry nad artykułami - poprawiony minimalizm i odstępy */
+.category-filters,
+.tabs-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 32px;
+    margin: 30px auto 50px auto !important;
+    width: 100% !important;
+    padding: 0;
+}
+
+.category-filters li, 
+.tabs-container li {
+    display: inline-block !important;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    padding-bottom: 6px;
+}
+
+.category-filters li:hover,
+.category-filters li.active,
+.tabs-container li:hover {
+    color: var(--text-color);
+}
+
+.category-filters li::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.5px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--text-color);
+    transform-origin: bottom center;
+    transition: transform 0.3s ease;
+}
+
+.category-filters li:hover::after,
+.category-filters li.active::after {
+    transform: scaleX(1);
 }
 
 .article-long h2 {
@@ -727,12 +782,53 @@ body.dark-mode .story-category {
     margin: 30px 0;
 }
 
-/* --- KONTENER DLA POJEDYNCZEGO WIDOKU ARTYKUŁU (ZAPOBIEGA NAKŁADANIU STOPKI) --- */
 .article-single-container {
     padding-bottom: 80px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-/* --- PRZYCISK POWROTU Z ANIMACJĄ STRZAŁKI W LEWO --- */
+/* --- NOWE: Dedykowany, wyśrodkowany nagłówek metadanych dla podstrony artykułu --- */
+.article-meta-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.article-meta-header .story-category {
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 0;
+    background: none;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.article-meta-header .story-date::before {
+    content: "•";
+    margin-right: 16px;
+    color: var(--border-color);
+}
+
+/* --- NOWE: Elegancka, czytelna zajawka na podstronie artykułu --- */
+.article-single-container .editorial-lead {
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.65;
+    color: var(--text-color);
+    text-align: center;
+    max-width: 720px;
+    margin: 32px auto 48px auto;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
 .btn-back-blog {
     display: inline-flex;
     align-items: center;
@@ -766,7 +862,7 @@ body.dark-mode .story-category {
     transform: translateX(-6px);
 }
 
-/* --- WYSTYLIZOWANA LISTA DYNAMICZNYCH ARTYKUŁÓW W KATEGORIACH --- */
+/* --- DYNAMICZNA LISTA ARTYKUŁÓW W KATEGORIACH --- */
 .article-long-wrapper {
     display: flex;
     flex-direction: column;
@@ -778,7 +874,7 @@ body.dark-mode .story-category {
 .article-long-wrapper .story-image-wrapper {
     position: relative;
     width: 100%;
-    max-height: 480px;
+    max-height: 520px;
     overflow: hidden;
     margin-bottom: 24px;
     border-radius: 0px; 
@@ -793,18 +889,41 @@ body.dark-mode .story-category {
 }
 
 .article-long-wrapper .story-image-wrapper:hover .story-img {
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 
-.article-long-wrapper .story-meta {
-    display: flex;
-    gap: 16px;
-    align-items: center;
-    font-size: 0.85rem;
+/* Wymuszenie metadanych w jednej wyśrodkowanej linii bezpośrednio nad/pod tytułem */
+.story-meta, 
+.article-long-wrapper .story-meta,
+[class*="meta"] {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 11px !important;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 12px;
+    letter-spacing: 2px;
+    margin: 24px auto 10px auto !important;
     color: var(--text-muted);
+    width: 100% !important;
+    float: none !important;
+}
+
+.story-meta > *, 
+.article-long-wrapper .story-meta > * {
+    display: inline-block !important;
+    margin: 0 !important;
+    float: none !important;
+}
+
+/* Elegancki miniaturowy separator */
+.story-meta .story-date::after,
+.article-long-wrapper .story-meta .story-date::after {
+    content: "•" !important;
+    margin-left: 12px !important;
+    color: var(--border-color) !important;
+    opacity: 0.7;
 }
 
 .article-long-wrapper .story-category {
@@ -814,28 +933,38 @@ body.dark-mode .story-category {
 }
 
 .article-long-wrapper .story-title {
-    font-size: 2.2rem;
+    text-align: center; 
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 38px);
     font-weight: 400; 
-    line-height: 1.3;
-    margin-bottom: 16px;
+    line-height: 1.25;
+    margin-bottom: 18px;
     color: var(--text-color);
     transition: color 0.3s ease;
+    letter-spacing: -0.3px;
 }
 
 .article-long-wrapper .story-title:hover {
     color: var(--text-muted);
 }
 
+/* Poprawka kontrastu i szerokości bloku zajawki na liście */
 .article-long-wrapper .story-excerpt {
-    font-size: 1.05rem;
-    line-height: 1.65;
-    color: var(--text-color);
-    margin-bottom: 24px;
-    opacity: 0.9;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #2c2c2c; 
+    margin: 0 auto 30px auto;
+    max-width: 720px; 
+    text-align: center; 
+    opacity: 0.95;
+}
+
+body.dark-mode .article-long-wrapper .story-excerpt {
+    color: #d1d1d1; 
 }
 
 .article-long-wrapper .btn-read-more {
-    align-self: flex-start;
+    margin: 0 auto; 
     background: none;
     border: none;
     border-bottom: 2px solid var(--text-color);
@@ -975,12 +1104,14 @@ body.dark-mode .story-category {
 }
 
 /* ==========================================================================
-   12. INSTAGRAM FEED FULL-BLEED
+   12. INSTAGRAM FEED FULL-BLEED (POPRAWIONY UKŁAD I ANIMACJA)
    ========================================================================== */
 
 .instagram-section-full {
     padding: 80px 0 0 0;
     background-color: var(--bg-color);
+    width: 100%;
+    clear: both; /* Zabezpieczenie przed floatami */
 }
 
 .insta-full-header {
@@ -1003,21 +1134,38 @@ body.dark-mode .story-category {
     letter-spacing: 1px;
 }
 
-.insta-grid-fluid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+/* Wymuszenie grida, aby zablokować pionowy układ z klasy article-long-wrapper */
+.insta-grid-fluid, 
+.instagram-section-full .insta-grid,
+.instagram-section-full [class*="grid"] {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    width: 100% !important;
+    gap: 0 !important; /* Brak odstępów dla efektu full-bleed */
 }
 
-.insta-item-fluid {
-    position: relative;
-    aspect-ratio: 1;
-    overflow: hidden;
+.insta-item-fluid,
+.instagram-section-full .story-img-wrapper {
+    position: relative !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: auto !important;
 }
 
-.insta-item-fluid img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.insta-item-fluid img,
+.instagram-section-full .story-img-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    transition: var(--transition) !important;
+}
+
+/* Przywrócenie pięknej płynnej animacji powiększenia i nakładki */
+.insta-item-fluid:hover img,
+.instagram-section-full .story-img-wrapper:hover img { 
+    transform: scale(1.06) !important; 
 }
 
 .insta-hover-overlay {
@@ -1033,15 +1181,13 @@ body.dark-mode .story-category {
     color: #ffffff;
     font-size: 24px;
     opacity: 0;
+    z-index: 2;
     transition: var(--transition);
 }
 
-.insta-item-fluid:hover .insta-hover-overlay { 
+.insta-item-fluid:hover .insta-hover-overlay,
+.instagram-section-full .story-img-wrapper:hover .insta-hover-overlay { 
     opacity: 1; 
-}
-
-.insta-item-fluid:hover img { 
-    transform: scale(1.05); 
 }
 
 /* ==========================================================================
@@ -1189,7 +1335,7 @@ body.dark-mode .story-category {
 }
 
 /* ==========================================================================
-   15. MEDIA QUERIES (RESPONSIVE RETOUCH) - PEŁNA KOREKTA BENTO I MENU
+   15. MEDIA QUERIES (RESPONSIVE RETOUCH)
    ========================================================================== */
 
 @media (max-width: 1024px) {
@@ -1248,7 +1394,6 @@ body.dark-mode .story-category {
         display: flex; 
     }
 
-    /* Główne menu mobilne - zmiana paddingu, obsługa przewijania i wycentrowanie */
     .nav-menu {
         position: fixed; 
         top: 90px; 
@@ -1270,7 +1415,7 @@ body.dark-mode .story-category {
         left: 0; 
     }
 
-    /* --- FIX SUBMENU MOBILNEGO --- */
+    /* --- DROPDOWN MOBILNY --- */
     .dropdown {
         width: 100%;
         text-align: center;
@@ -1308,13 +1453,11 @@ body.dark-mode .story-category {
         background-color: transparent; 
         color: var(--text-color);
     }
-    /* --- KONIEC FIXU SUBMENU --- */
 
     .hero-editorial { 
         padding: 40px 0; 
     }
 
-    /* Style Bento na smartfonie */
     .bento-grid {
         display: flex;
         flex-direction: column;
@@ -1352,6 +1495,7 @@ body.dark-mode .story-category {
 /* ==========================================================================
    16. PAGINACJA (STRONICOWANIE PREMIUM)
    ========================================================================== */
+
 .pagination-wrapper {
     display: flex;
     justify-content: center;
@@ -1378,7 +1522,7 @@ body.dark-mode .story-category {
     justify-content: center;
     min-width: 40px;
     height: 40px;
-    border-radius: 0px; /* Minimalistyczny, ostry styl */
+    border-radius: 0px; 
 }
 
 .pagination-btn.active {
@@ -1404,4 +1548,274 @@ body.dark-mode .story-category {
 
 body.dark-mode .pagination-btn:hover:not(.active) {
     background: #222;
+}
+
+.article-long .editorial-lead,
+#page-article-view .editorial-lead {
+    color: #4a4a4a !important; /* Wyrazisty, czytelny ciemnoszary kolor */
+    font-size: 1.15rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    opacity: 0.9; /* Jeśli była tam ustawiona niska opasłość, to ją podnosimy */
+}
+
+/* Jeśli strona obsługuje dark mode, upewnijmy się, że tam też będzie go widać */
+body.dark-mode .article-long .editorial-lead,
+body.dark-mode #page-article-view .editorial-lead {
+    color: #e0e0e0 !important; /* Jasnoszary na ciemnym tle */
+}
+
+/* Wymuszenie koloru dla KAŻDEGO pierwszego akapitu, który wpada do widoku artykułu */
+#post-view-body p:first-of-type,
+#post-view-body .editorial-lead,
+.article-body-html p:first-child {
+    color: #333333 !important;
+    opacity: 1 !important;
+}
+
+/* Wersja dla trybu ciemnego, jeśli go używaszy */
+body.dark-mode #post-view-body p:first-of-type,
+body.dark-mode .article-body-html p:first-child {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.article-long-wrapper .story-excerpt,
+.story-excerpt {
+    color: #767676 !important; /* Wymuszamy Twój ciemny kolor z CSS */
+}
+
+/* Kontener nadrzędny dla metadanych */
+.article-meta-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Odstęp między kategorią, kropką a datą */
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Styl dla kategorii */
+.article-meta-header .story-category {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #ffb6c1; /* Subtelny akcent kolorystyczny dla kategorii */
+}
+
+/* Separator (kropka) */
+.article-meta-header .meta-separator {
+    color: #666666;
+    font-size: 0.75rem;
+}
+
+/* Styl dla daty */
+.article-meta-header .story-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999999; /* Przygaszony, elegancki kolor dla daty */
+}
+
+/* Zabezpieczenie dla trybu ciemnego (dark mode) */
+body.dark-mode .article-meta-header .story-date {
+    color: #b0b0b0 !important;
+}
+body.dark-mode .article-meta-header .story-category {
+    color: #ffccd5 !important;
+}
+
+/* Gwarancja wyświetlania overlay na hover dla obu wariantów klas */
+.insta-item-fluid:hover .insta-hover-overlay,
+.story-img-wrapper:hover .insta-hover-overlay,
+.instagram-section-full [class*="wrapper"]:hover .insta-hover-overlay {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Dodatkowe zabezpieczenie: upewnijmy się, że sam overlay ma pozycjonowanie absolutne względem rodzica */
+.insta-hover-overlay {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 10 !important; /* Wyniesienie nad obrazek */
+    pointer-events: none; /* Zapobiega "migotaniu" myszki między obrazkiem a nakładką */
+}
+
+/* ==========================================================================
+   PREMIUM FOOTER STYLES
+   ========================================================================== */
+.footer-premium {
+    background-color: #0b0b0b; /* Głęboka, elegancka czerń */
+    color: #ffffff;
+    padding: 80px 0 30px 0;
+    font-family: 'Inter', sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+/* Lewa strona - Brand */
+.footer-brand-side {
+    flex: 1;
+    min-width: 280px;
+}
+
+.footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.footer-brand-side .section-subtitle {
+    color: #8c8c8c;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 18px;
+}
+
+.footer-socials a {
+    color: #ffffff;
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+    opacity: 0.8;
+}
+
+.footer-socials a:hover {
+    color: #e5c1cd; /* Subtelny pastelowy róż w hoverze */
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+/* Prawa strona - Newsletter */
+.footer-newsletter-side {
+    flex: 1;
+    min-width: 320px;
+    max-width: 480px;
+}
+
+.footer-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.footer-text-muted {
+    color: #8c8c8c;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+/* Formularz Newslettera */
+.newsletter-form {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    transition: border-color 0.3s ease;
+}
+
+.newsletter-form:focus-within {
+    border-color: #ffffff;
+}
+
+.newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 0;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+.newsletter-input:focus {
+    outline: none;
+}
+
+.newsletter-input::placeholder {
+    color: #555555;
+}
+
+.newsletter-submit-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    padding: 12px 0 12px 20px;
+    transition: color 0.3s ease;
+}
+
+.newsletter-submit-btn:hover {
+    color: #e5c1cd;
+}
+
+.footer-contact-mail {
+    color: #8c8c8c;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Dolny pasek z prawami autorskimi */
+.footer-bottom-bar {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 30px;
+}
+
+.footer-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #555555;
+    font-size: 0.8rem;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-branding-tag {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .footer-grid {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .footer-newsletter-side {
+        max-width: 100%;
+    }
+    .footer-bottom-container {
+        flex-direction: column;
+        text-align: center;
+    }
 }

@@ -6,7 +6,7 @@
     <title>Aneta | Moda, City Breaks & Balans</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,43 +14,46 @@
 </head>
 <body>
 
-    <header class="header premium-header">
+    <header class="premium-header">
         <div class="container nav-container">
-            <a href="index.html" class="logo-link">
+            <a href="index.html" class="logo-link" aria-label="Strona główna">
                 <img src="logo.svg" alt="Aneta Malinowska Logo" class="site-logo">
             </a>
             
             <div class="nav-right">
-                <button id="theme-toggle" class="theme-btn" aria-label="Zmień motyw">
-                    <i id="themeIcon" class="fa-solid fa-moon theme-btn-icon"></i>
+                <button id="theme-toggle" class="theme-btn" aria-label="Zmień motyw (jasny/ciemny)">
+                    <i id="themeIcon" class="fa-solid fa-moon"></i>
                 </button>
-                <div class="menu-toggle" onclick="toggleMenu()">
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Otwórz menu nawigacji" aria-expanded="false">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
-                </div>
+                </button>
             </div>
 
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
-                <li><a href="#about-section" class="nav-link" onclick="showPage('home')">O mnie</a></li>
-                <li class="dropdown">
-                    <a href="#" class="nav-link">Kategorie <i class="fa-solid fa-chevron-down dropdown-arrow"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" onclick="showPage('moda')">Moda & Styl</a></li>
-                        <li><a href="#" onclick="showPage('podroze')">City Breaks</a></li>
-                        <li><a href="#" onclick="showPage('aktywnie')">Aktywnie & Zdrowo</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" class="nav-link" onclick="showPage('wspolpraca')">Współpraca</a></li>
-                <li><a href="#footer-newsletter" class="nav-link">Kontakt</a></li>
-            </ul>
+            <nav class="nav-menu-wrapper" id="navMenuWrapper">
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="#about-section" class="nav-link">O mnie</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false" onclick="return false;">
+                            Kategorie <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="category-trigger" data-category="moda" onclick="showPage('moda'); return false;">Moda & Styl</a></li>
+                            <li><a href="#" class="category-trigger" data-category="podroze" onclick="showPage('podroze'); return false;">City Breaks</a></li>
+                            <li><a href="#" class="category-trigger" data-category="aktywnie" onclick="showPage('aktywnie'); return false;">Aktywnie & Zdrowo</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" class="nav-link" onclick="showPage('wspolpraca'); return false;">Współpraca</a></li>
+                    <li><a href="#footer-newsletter" class="nav-link">Kontakt</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
     <main>
-        <section id="page-home" class="fade-in-element">
-            
+        <section id="page-home" class="page-section">
             <div class="magazine-layout">
                 <div class="container">
                     <div class="magazine-hero-row">
@@ -59,13 +62,13 @@
                             <h1 class="editorial-title">Moda, aktywne życie i szybkie podróże. Odkryj <em>balans</em> w wielkim mieście.</h1>
                             <p class="editorial-lead">Przestrzeń dedykowana nowoczesnym kobietom, które pragną czerpać z życia pełnymi garściami bez utraty wewnętrznego spokoju.</p>
                             <div class="hero-cta-group">
-                                <button class="btn btn-premium" onclick="showPage('moda')">Eksploruj bloga</button>
+                                <button class="btn-premium" onclick="showPage('moda')">Eksploruj bloga</button>
                                 <a href="#about-section" class="scroll-discover">Odkryj Anetę <i class="fa-solid fa-arrow-down-long"></i></a>
                             </div>
                         </div>
                         <div class="hero-image-block">
                             <div class="magazine-image-container">
-                                <img src="woman_picadilly_circus_london.png" alt="Aneta w Londynie" class="magazine-hero-img">
+                                <img src="woman_picadilly_circus_london.png" alt="Aneta spacerująca po Piccadilly Circus w Londynie" class="magazine-hero-img">
                                 <div class="floating-badge">@aneta.balansuje</div>
                             </div>
                         </div>
@@ -82,33 +85,39 @@
                     
                     <div class="bento-grid">
                         <div class="card-main-img">
-                            <img src="woman_evening_home_natural.png" alt="Aneta - lifestyle" class="magazine-img">
+                            <img src="woman_evening_home_natural.png" alt="Aneta - portret w domowym, naturalnym wydaniu">
                         </div>
                         <div class="card-text">
                             <p class="bento-highlight-text">Mam 30 lat i na co dzień balansuję między intensywnym życiem zawodowym a pasjami, które napędzają mnie do działania.</p>
                             <p>Rozgość się, zainspiruj i zostań na dłużej! Znajdziesz tu moją osobistą definicję nowoczesnego miejskiego rytmu.</p>
                         </div>
                         
-                        <div class="card-topic bg-hover-pink" onclick="showPage('moda')">
-                            <div class="bento-topic-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                            <h3>Moda & Lifestyle</h3>
-                            <p>Stylowo każdego dnia, ceniąc jakość i wygodę.</p>
+                        <button class="card-topic bg-hover-pink" onclick="showPage('moda')">
+                            <span class="bento-topic-icon" aria-hidden="true"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+                            <span class="bento-topic-content">
+                                <h3>Moda & Lifestyle</h3>
+                                <p>Stylowo każdego dnia, ceniąc jakość i wygodę.</p>
+                            </span>
                             <span class="bento-link">Zobacz stylizacje <i class="fa-solid fa-arrow-right-long"></i></span>
-                        </div>
+                        </button>
 
-                        <div class="card-topic bg-hover-teal" onclick="showPage('podroze')">
-                            <div class="bento-topic-icon"><i class="fa-solid fa-compass"></i></div>
-                            <h3>City Breaks</h3>
-                            <p>Szybkie, weekendowe odkrywanie najpiękniejszych zakątków Europy.</p>
+                        <button class="card-topic bg-hover-teal" onclick="showPage('podroze')">
+                            <span class="bento-topic-icon" aria-hidden="true"><i class="fa-solid fa-compass"></i></span>
+                            <span class="bento-topic-content">
+                                <h3>City Breaks</h3>
+                                <p>Szybkie, weekendowe odkrywanie najpiękniejszych zakątków Europy.</p>
+                            </span>
                             <span class="bento-link">Ruszaj w drogę <i class="fa-solid fa-arrow-right-long"></i></span>
-                        </div>
+                        </button>
 
-                        <div class="card-topic bg-hover-lime" onclick="showPage('aktywnie')">
-                            <div class="bento-topic-icon"><i class="fa-solid fa-bicycle"></i></div>
-                            <h3>Active Self-care</h3>
-                            <p>Ruch dla czystej przyjemności i resetu. Rolki, rower, oddech.</p>
+                        <button class="card-topic bg-hover-lime" onclick="showPage('aktywnie')">
+                            <span class="bento-topic-icon" aria-hidden="true"><i class="fa-solid fa-bicycle"></i></span>
+                            <span class="bento-topic-content">
+                                <h3>Active Self-care</h3>
+                                <p>Ruch dla czystej przyjemności i resetu. Rolki, rower, oddech.</p>
+                            </span>
                             <span class="bento-link">Znajdź balans <i class="fa-solid fa-arrow-right-long"></i></span>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </section>
@@ -124,77 +133,71 @@
             </section>
         </section>
 
-        <!-- Sekcja szablonu kategorii: style inline przeniesione do klas (zgodnie z czystym kodem z pliku image_f1d1e4.png) -->
-        <section id="category-template-page" class="stories-section fade-in-element" style="display: none;">
+        <section id="category-template-page" class="stories-section dynamic-page" style="display: none;">
             <div class="container">
-                <div class="category-page-header">
-                    <h1 id="cat-page-title" class="editorial-title"></h1>
+                <div class="category-header">
+                    <h1 id="cat-page-title" class="editorial-section-title"></h1>
                     <p id="cat-page-description" class="editorial-lead"></p>
                 </div>
 
-                <div class="category-tabs-wrapper" id="cat-page-tabs"></div>
+                <ul class="category-filters" id="cat-page-tabs"></ul>
 
-                <div id="cat-articles-container" class="category-articles-grid"></div>
+                <div id="cat-articles-container" class="article-long-wrapper"></div>
             </div>
         </section>
 
-        <section id="page-article-view" class="article-single-view fade-in-element" style="display: none;">
-            <div class="container article-single-container">
-                
+        <section id="page-article-view" class="article-single-container dynamic-page" style="display: none;">
+            <div class="container">
                 <button class="btn-back-blog" onclick="closeArticle()">
-                    <span class="arrow">&larr;</span> Powrót do bloga
+                    <span class="arrow" aria-hidden="true">&larr;</span> Powrót do bloga
                 </button>
                 
-                <article class="full-article-content">
+                <article class="article-long">
                     <div class="article-meta-header">
                         <span id="post-view-category" class="story-category"></span>
+                        <span class="meta-separator" aria-hidden="true">•</span>
                         <span id="post-view-date" class="story-date"></span>
                     </div>
-                    <h1 id="post-view-title" class="full-article-title"></h1>
+                    <h1 id="post-view-title" class="editorial-section-title"></h1>
                     <div id="post-view-body" class="article-body-html"></div>
                 </article>
             </div>
         </section>
 
-        <section id="page-wspolpraca" class="cooperation-premium-section" style="display: none;">
+        <section id="page-wspolpraca" class="stories-section dynamic-page" style="display: none;">
             <div class="container">
-                <div class="coop-premium-wrapper">
-                    <div class="coop-premium-content">
-                        <span class="coop-mini-tag">Collabs & Projects</span>
-                        <h2 class="coop-main-title">Stwórzmy razem coś <em>pięknego</em>.</h2>
-                        <p class="coop-lead">@aneta.balansuje to nowo narodzony koncept lifestylowy, budowany od pierwszego dnia wokół zaangażowanej niszowej społeczności. Nowy projekt na mapie polskiego lifestyle'u oznacza świeże spojrzenie i unikalną estetykę.</p>
+                <div class="magazine-hero-row align-start">
+                    <div class="hero-text-block">
+                        <span class="hero-tagline">Collabs & Projects</span>
+                        <h2 class="editorial-section-title">Stwórzmy razem coś <em>pięknego</em>.</h2>
+                        <p class="editorial-lead">@aneta.balansuje to nowo narodzony koncept lifestylowy, budowany od pierwszego dnia wokół zaangażowanej niszowej społeczności. Nowy projekt na mapie polskiego lifestyle'u oznacza świeże spojrzenie i unikalną estetykę.</p>
                         
-                        <div class="coop-quote-box">
-                            <p class="italic-text">"Dla marek, które uwierzą w projekt na starcie, przygotowałam dedykowane, unikalne warunki partnerskie."</p>
+                        <div class="aneta-tip">
+                            <blockquote class="bento-highlight-text editorial-quote">
+                                "Dla marek, które uwierzą w projekt na starcie, przygotowałam dedykowane, unikalne warunki partnerskie."
+                            </blockquote>
                         </div>
                         
-                        <a href="#" class="btn-premium-download">
-                            <span class="btn-text">Pobierz Media Kit (PDF)</span>
-                            <span class="btn-text btn-icon"><i class="fa-solid fa-arrow-down"></i></span>
+                        <a href="media-kit.pdf" class="btn-premium" download>
+                            Pobierz Media Kit (PDF) <i class="fa-solid fa-arrow-down icon-spacing" aria-hidden="true"></i>
                         </a>
                     </div>
                     
-                    <div class="coop-premium-cards">
-                        <div class="premium-feature-card">
-                            <div class="feat-num">01</div>
-                            <div class="feat-body">
-                                <h4>Estetyka bez kompromisów</h4>
-                                <p>Każda współpraca otrzymuje autorską oprawę fotograficzną i unikalną grafikę dopasowaną do DNA Twojej marki.</p>
-                            </div>
+                    <div class="hero-image-block flex-column-gap">
+                        <div class="card-topic static-card">
+                            <div class="bento-topic-icon" aria-hidden="true">01</div>
+                            <h3>Estetyka bez kompromisów</h3>
+                            <p>Każda współpraca otrzymuje autorską oprawę fotograficzną i unikalną grafikę dopasowaną do DNA Twojej marki.</p>
                         </div>
-                        <div class="premium-feature-card">
-                            <div class="feat-num">02</div>
-                            <div class="feat-body">
-                                <h4>Maksymalna widoczność</h4>
-                                <p>Twój product będzie lśnił na pierwszym planie. Rygorystycznie ograniczam liczbę współprac, eliminując szum reklamowy.</p>
-                            </div>
+                        <div class="card-topic static-card">
+                            <div class="bento-topic-icon" aria-hidden="true">02</div>
+                            <h3>Maksymalna widoczność</h3>
+                            <p>Twój produkt będzie lśnił na pierwszym planie. Rygorystycznie ograniczam liczbę współprac, eliminując szum reklamowy.</p>
                         </div>
-                        <div class="premium-feature-card">
-                            <div class="feat-num">03</div>
-                            <div class="feat-body">
-                                <h4>Elastyczność & Pasja</h4>
-                                <p>Jako startujący, zmotywowany twórca oferuję pełne zaangażowanie, nieszablonowe podejście i elastyczny proces kreatywny.</p>
-                            </div>
+                        <div class="card-topic static-card">
+                            <div class="bento-topic-icon" aria-hidden="true">03</div>
+                            <h3>Elastyczność & Pasja</h3>
+                            <p>Jako startujący, zmotywowany twórca oferuję pełne zaangażowanie, nieszablonowe podejście i elastyczny proces kreatywny.</p>
                         </div>
                     </div>
                 </div>
@@ -203,55 +206,70 @@
     </main>
 
     <section class="instagram-section-full" id="insta-feed-section">
-        <div class="insta-full-header">
-            <h2 class="insta-handle">Insta Moodboard <a href="#" target="_blank">@aneta.balansuje</a></h2>
+        <div class="insta-full-header text-center mb-30">
+            <h2 class="editorial-section-title headline-sub">Insta Moodboard</h2>
+            <a href="https://instagram.com/aneta.balansuje" target="_blank" rel="noopener" class="section-subtitle">@aneta.balansuje</a>
         </div>
-        <div class="insta-grid-fluid">
-            <div class="insta-item-fluid">
-                <img src="woman_picadilly_circus_london.png" alt="Lifestyle 1">
-                <div class="insta-hover-overlay"><i class="fa-brands fa-instagram"></i></div>
+        <div class="insta-grid insta-grid-fluid">
+            
+            <div class="story-img-wrapper insta-item-fluid">
+                <img src="woman_picadilly_circus_london.png" alt="Aneta w stylizacji miejskiej - Londyn" class="story-img">
+                <div class="insta-hover-overlay">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
             </div>
-            <div class="insta-item-fluid">
-                <img src="woman_sensual_bw_elegant.png" alt="Lifestyle 2">
-                <div class="insta-hover-overlay"><i class="fa-brands fa-instagram"></i></div>
+            
+            <div class="story-img-wrapper insta-item-fluid">
+                <img src="woman_sensual_bw_elegant.png" alt="Elegancki, czarno-biały portret wizerunkowy" class="story-img">
+                <div class="insta-hover-overlay">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
             </div>
-            <div class="insta-item-fluid">
-                <img src="woman_rollerblading_polish_park.png" alt="Lifestyle 3">
-                <div class="insta-hover-overlay"><i class="fa-brands fa-instagram"></i></div>
+            
+            <div class="story-img-wrapper insta-item-fluid">
+                <img src="woman_rollerblading_polish_park.png" alt="Aktywne popołudnie - jazda na rolkach w parku" class="story-img">
+                <div class="insta-hover-overlay">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
             </div>
-            <div class="insta-item-fluid">
-                <img src="woman_evening_home_natural.png" alt="Lifestyle 4">
-                <div class="insta-hover-overlay"><i class="fa-brands fa-instagram"></i></div>
+            
+            <div class="story-img-wrapper insta-item-fluid">
+                <img src="woman_evening_home_natural.png" alt="Chwila relaksu w przytulnym domowym zaciszu" class="story-img">
+                <div class="insta-hover-overlay">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
             </div>
+
         </div>
     </section>
 
-    <footer class="footer-premium" id="footer-newsletter">
-        <div class="container footer-premium-grid">
+   <footer class="footer-premium" id="footer-newsletter">
+        <div class="container footer-grid">
             <div class="footer-brand-side">
-                <h3 class="footer-logo-text">Aneta.Balansuje</h3>
-                <p class="footer-tagline">Ekskluzywna przestrzeń miejskiego balansu.</p>
-                <div class="social-links-premium">
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+                <h3 class="editorial-section-title footer-logo">Aneta.Balansuje</h3>
+                <p class="section-subtitle">Ekskluzywna przestrzeń miejskiego balansu.</p>
+                <div class="footer-socials">
+                    <a href="#" aria-label="Odwiedź nasz profil na Instagramie"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Odwiedź nasz profil na TikToku"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#" aria-label="Odwiedź nasz profil na Pintereście"><i class="fa-brands fa-pinterest"></i></a>
                 </div>
             </div>
             
             <div class="footer-newsletter-side">
-                <h4>Dołącz do społeczności</h4>
-                <p>Otrzymuj unikalne inspiracje modowe i pomysły na weekendowe podróże bezpośrednio na maila.</p>
-                <div class="premium-input-group">
-                    <input type="email" placeholder="Twój adres e-mail" aria-label="E-mail">
-                    <button class="btn-submit-premium">Zapisz się</button>
-                </div>
-                <p class="footer-contact-email">kontakt@anetamalinowska.pl</p>
+                <h4 class="footer-heading">Dołącz do społeczności</h4>
+                <p class="footer-text-muted">Otrzymuj unikalne inspiracje modowe i pomysły na weekendowe podróże bezpośrednio na maila.</p>
+                
+                <form class="newsletter-form" onsubmit="return false;">
+                    <input type="email" placeholder="Twój adres e-mail" aria-label="Wpisz swój adres e-mail" required class="newsletter-input">
+                    <button type="submit" class="newsletter-submit-btn">Zapisz się</button>
+                </form>
+                <p class="footer-contact-mail">kontakt@anetamalinowska.pl</p>
             </div>
         </div>
-        <div class="footer-premium-bottom">
-            <div class="container bottom-flex">
+        <div class="footer-bottom-bar">
+            <div class="container footer-bottom-container">
                 <p>&copy; 2026 Aneta. All rights reserved.</p>
-                <p class="crafted-text">Dedykowany projekt i unikalna estetyka</p>
+                <p class="footer-branding-tag">Dedykowany projekt i unikalna estetyka</p>
             </div>
         </div>
     </footer>
