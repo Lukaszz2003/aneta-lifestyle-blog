@@ -47,24 +47,27 @@ function renderLatestStories() {
         const article = catArticles[catArticles.length - 1];
 
         let tagClass = "tag-style";
-        let displayCategory = "Styl";
+        let displayCategory = "Moda & Styl";
 
         if (article.category === "podroze") {
             tagClass = "tag-breaks";
-            displayCategory = "Breaks";
+            displayCategory = "City Breaks";
         } else if (article.category === "aktywnie") {
             tagClass = "tag-zdrowo";
-            displayCategory = "Zdrowo";
+            displayCategory = "Active Self-care";
         }
 
         const cardHTML = `
             <article class="story-card" onclick="openArticle('${article.id}')">
                 <div class="story-img-wrapper">
                     <img src="${article.image}" alt="${article.title}" class="story-img">
-                    <span class="story-category ${tagClass}">${displayCategory}</span>
                 </div>
                 <div class="story-content">
-                    <span class="story-date">${article.date}</span>
+                    <div class="story-meta">
+                        <span class="story-category ${tagClass}">${displayCategory}</span>
+                        <span class="meta-separator"></span>
+                        <span class="story-date">${article.date}</span>
+                    </div>
                     <h3 class="story-title">${article.title}</h3>
                     <p class="story-excerpt">${article.excerpt}</p>
                     <span class="story-read-more">Czytaj artykuł <i class="fa-solid fa-arrow-right-long"></i></span>
@@ -80,7 +83,6 @@ function renderLatestStories() {
    3. RENDEROWANIE PODSTRON KATEGORII Z PAGINACJĄ (STRONICOWANIEM)
    ========================================================================== */
 
-// Globalne zmienne do śledzenia stanu paginacji w SPA
 let currentPage = 1; 
 const articlesPerPage = 1; // Żądanie: 1 artykuł na podstronę
 
@@ -109,20 +111,19 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko", page = 1) {
             tab.style.padding = '8px 20px';
             tab.style.borderBottom = tabName === selectedSubcat ? '2px solid var(--text-main, #000)' : 'none';
             tab.innerText = tabName;
-            // Przy zmianie zakładki resetujemy paginację do 1. strony
             tab.onclick = () => renderCategoryPage(catKey, tabName, 1);
             tabsContainer.appendChild(tab);
         });
     }
 
-    // 3. Filtrowanie artykułów i odwrócenie kolejności (żeby najnowsze były jako pierwsze na stronie 1)
+    // 3. Filtrowanie artykułów i odwrócenie kolejności
     const filteredArticles = articles
         .filter(art => {
             if (art.category !== catKey) return false;
             if (selectedSubcat === "Wszystko") return true;
             return art.subcategory === selectedSubcat;
         })
-        .reverse(); // Nowa Praga będzie pierwsza, starszy Londyn drugi!
+        .reverse(); 
 
     const articlesContainer = document.getElementById('cat-articles-container');
     if (!articlesContainer) return;
@@ -137,25 +138,23 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko", page = 1) {
     const totalArticles = filteredArticles.length;
     const totalPages = Math.ceil(totalArticles / articlesPerPage);
     
-    // Obliczamy indeksy dla uciętej podstrony
     const startIndex = (currentPage - 1) * articlesPerPage;
     const endIndex = startIndex + articlesPerPage;
     const articlesToShow = filteredArticles.slice(startIndex, endIndex);
 
-    // Renderujemy artykuł przypisany do danej podstrony z AUTOMATYCZNYM przypisywaniem zdjęcia
     articlesToShow.forEach(art => {
         const articleBlock = document.createElement('article');
         articleBlock.className = 'article-long-wrapper';
         articleBlock.style.marginBottom = '60px';
         articleBlock.style.width = '100%';
         
-        // Dynamiczna struktura - automatycznie wstrzykuje unikalne zdjęcie z bazy danych dla każdego artykułu
         articleBlock.innerHTML = `
             <div class="story-image-wrapper" onclick="openArticle('${art.id}')" style="cursor: pointer; margin-bottom: 25px; overflow: hidden; width: 100%; max-height: 500px;">
                 <img src="${art.image}" alt="${art.title}" class="story-img" style="width: 100%; height: auto; object-fit: cover; display: block;">
             </div>
-            <div class="story-meta" style="margin-bottom: 12px; font-size: 0.9rem; color: #666; display: flex; gap: 15px;">
-                <span class="story-category" style="font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">${art.subcategory}</span>
+            <div class="story-meta">
+                <span class="story-category">${art.subcategory}</span>
+                <span class="meta-separator"></span>
                 <span class="story-date">${art.date}</span>
             </div>
             <h2 class="story-title" onclick="openArticle('${art.id}')" style="cursor: pointer; font-size: 2rem; margin-bottom: 15px; font-family: inherit;">
@@ -171,13 +170,10 @@ function renderCategoryPage(catKey, selectedSubcat = "Wszystko", page = 1) {
         articlesContainer.appendChild(articleBlock);
     });
 
-    // 5. GENEROWANIE PANELU PAGINACJI NA DOLE STRONY
     renderPaginationControls(totalPages, catKey, selectedSubcat);
 }
 
-// Pomocnicza funkcja generująca przyciski stron (1, 2, 3...) na dole
 function renderPaginationControls(totalPages, catKey, selectedSubcat) {
-    // Szukamy istniejącego kontenera paginacji lub tworzymy nowy pod artykułami
     let paginationContainer = document.getElementById('pagination-controls');
     
     if (!paginationContainer) {
@@ -189,10 +185,8 @@ function renderPaginationControls(totalPages, catKey, selectedSubcat) {
     paginationContainer.innerHTML = '';
     paginationContainer.className = 'pagination-wrapper';
     
-    // Jeśli jest tylko jedna strona, ukrywamy kontrolki
     if (totalPages <= 1) return;
 
-    // Przycisk "Poprzednia"
     if (currentPage > 1) {
         const prevBtn = document.createElement('button');
         prevBtn.className = 'pagination-btn prev-next';
@@ -201,7 +195,6 @@ function renderPaginationControls(totalPages, catKey, selectedSubcat) {
         paginationContainer.appendChild(prevBtn);
     }
 
-    // Cyfry podstron (1, 2...)
     for (let i = 1; i <= totalPages; i++) {
         const pageBtn = document.createElement('button');
         pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
@@ -210,7 +203,6 @@ function renderPaginationControls(totalPages, catKey, selectedSubcat) {
         paginationContainer.appendChild(pageBtn);
     }
 
-    // Przycisk "Następna"
     if (currentPage < totalPages) {
         const nextBtn = document.createElement('button');
         nextBtn.className = 'pagination-btn prev-next';
@@ -245,7 +237,6 @@ function openArticle(articleId) {
     if (viewDate) viewDate.innerText = article.date;
     if (viewTitle) viewTitle.innerText = article.title;
     
-    // W pełnym czytniku czyścimy ewentualne zdublowane banery i wstrzykujemy czysty htmlContent
     if (viewBody) viewBody.innerHTML = article.htmlContent;
 
     const homePage = document.getElementById('page-home');
@@ -288,7 +279,6 @@ function showPage(pageId) {
     const templatePage = document.getElementById('category-template-page');
     const instaFeed = document.getElementById('insta-feed-section');
 
-    // Usuwamy stary panel paginacji przy zmianie podstron głównych
     const oldPagination = document.getElementById('pagination-controls');
     if (oldPagination) oldPagination.remove();
 

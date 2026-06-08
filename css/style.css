@@ -201,7 +201,7 @@ body.dark-mode .premium-header {
     height: 1px;
     bottom: 0;
     left: 0;
-    background-color: var(--text-color); /* Usunięto jaskrawy fuksjowy na rzecz koloru tekstu motywu */
+    background-color: var(--text-color);
     transform-origin: bottom right;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -534,7 +534,7 @@ body.dark-mode .site-logo {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 6px;
-    color:#938f8f
+    color: #938f8f;
 }
 
 .card-topic p {
@@ -553,7 +553,7 @@ body.dark-mode .site-logo {
     align-items: center;
     gap: 8px;
     margin-top: auto;
-    color: #998585
+    color: #998585;
 }
 
 .bento-link i {
@@ -577,7 +577,7 @@ body.dark-mode .site-logo {
 }
 
 /* ==========================================================================
-   9. EDITORIAL STORIES CARDS (STRONA GŁÓWNA)
+   9. EDITORIAL STORIES CARDS (STRONA GŁÓWNA & UKŁAD METADANYCH)
    ========================================================================== */
 
 .stories-section {
@@ -627,45 +627,52 @@ body.dark-mode .site-logo {
     transform: scale(1.03);
 }
 
-.story-category {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 11px;
+/* WYMUSZENIE SPÓJNEGO I WYŚRODKOWANEGO UKŁADU METADANYCH */
+.story-meta, 
+.article-long-wrapper .story-meta,
+[class*="meta"] {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 11px !important;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 6px 14px;
-    font-weight: 600;
-    transition: color 0.4s ease; 
+    letter-spacing: 2px;
+    margin: 24px auto 25px auto !important; /* Odpowiedni margines odsuwający od nagłówka */
+    color: var(--text-muted);
+    width: 100% !important;
+    float: none !important;
 }
 
-.tag-style { 
-    background-color: var(--accent-pink); 
-    color: #1a1a1a; 
+.story-meta > *, 
+.article-long-wrapper .story-meta > * {
+    display: inline-block !important;
+    margin: 0 !important;
+    float: none !important;
 }
 
-.tag-breaks { 
-    background-color: var(--accent-teal); 
-    color: #1a1a1a; 
+.story-category {
+    font-weight: 700;
+    color: var(--text-color);
+    position: relative;
 }
 
-.tag-zdrowo { 
-    background-color: var(--accent-lime); 
-    color: #1a1a1a; 
+/* Elegancki miniaturowy separator kropkowy */
+.story-meta .story-date::before,
+.article-long-wrapper .story-meta .story-date::before {
+    content: "•" !important;
+    margin-right: 12px !important;
+    color: var(--border-color) !important;
+    opacity: 0.7;
 }
 
 .story-content {
     padding: 24px 0 0 0;
 }
 
-.story-date {
-    font-size: 12px;
-    color: var(--text-muted);
-    display: block;
-    margin-bottom: 8px;
-}
-
 .story-title {
+    text-align: center;
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 400;
@@ -718,7 +725,7 @@ body.dark-mode .story-category {
     margin-right: auto !important;
 }
 
-/* Filtry nad artykułami - poprawiony minimalizm i odstępy */
+/* Filtry nad artykułami */
 .category-filters,
 .tabs-container {
     display: flex !important;
@@ -788,36 +795,7 @@ body.dark-mode .story-category {
     margin: 0 auto;
 }
 
-/* --- NOWE: Dedykowany, wyśrodkowany nagłówek metadanych dla podstrony artykułu --- */
-.article-meta-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-}
-
-.article-meta-header .story-category {
-    position: relative;
-    top: 0;
-    left: 0;
-    padding: 0;
-    background: none;
-    font-weight: 700;
-    color: var(--text-color);
-}
-
-.article-meta-header .story-date::before {
-    content: "•";
-    margin-right: 16px;
-    color: var(--border-color);
-}
-
-/* --- NOWE: Elegancka, czytelna zajawka na podstronie artykułu --- */
+/* Elegancka, czytelna zajawka na podstronie artykułu */
 .article-single-container .editorial-lead {
     font-size: clamp(16px, 2vw, 19px);
     line-height: 1.65;
@@ -892,46 +870,6 @@ body.dark-mode .story-category {
     transform: scale(1.01);
 }
 
-/* Wymuszenie metadanych w jednej wyśrodkowanej linii bezpośrednio nad/pod tytułem */
-.story-meta, 
-.article-long-wrapper .story-meta,
-[class*="meta"] {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 12px !important;
-    font-size: 11px !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 24px auto 10px auto !important;
-    color: var(--text-muted);
-    width: 100% !important;
-    float: none !important;
-}
-
-.story-meta > *, 
-.article-long-wrapper .story-meta > * {
-    display: inline-block !important;
-    margin: 0 !important;
-    float: none !important;
-}
-
-/* Elegancki miniaturowy separator */
-.story-meta .story-date::after,
-.article-long-wrapper .story-meta .story-date::after {
-    content: "•" !important;
-    margin-left: 12px !important;
-    color: var(--border-color) !important;
-    opacity: 0.7;
-}
-
-.article-long-wrapper .story-category {
-    font-weight: 700;
-    color: var(--text-color);
-    position: relative;
-}
-
 .article-long-wrapper .story-title {
     text-align: center; 
     font-family: 'Playfair Display', serif;
@@ -948,19 +886,20 @@ body.dark-mode .story-category {
     color: var(--text-muted);
 }
 
-/* Poprawka kontrastu i szerokości bloku zajawki na liście */
+/* ZMIANA: Wymuszenie ciemnoszarego koloru dla motywu jasnego */
 .article-long-wrapper .story-excerpt {
     font-size: 15px;
     line-height: 1.7;
-    color: #2c2c2c; 
+    color: #3a3a3a !important; /* !important wymusi ten kolor */
     margin: 0 auto 30px auto;
     max-width: 720px; 
     text-align: center; 
     opacity: 0.95;
 }
 
+/* Zachowany jasny kontrast dla trybu ciemnego */
 body.dark-mode .article-long-wrapper .story-excerpt {
-    color: #d1d1d1; 
+    color: #d1d1d1 !important; /* Tutaj też dodajemy !important, aby tryb ciemny działał */
 }
 
 .article-long-wrapper .btn-read-more {
@@ -1104,14 +1043,14 @@ body.dark-mode .article-long-wrapper .story-excerpt {
 }
 
 /* ==========================================================================
-   12. INSTAGRAM FEED FULL-BLEED (POPRAWIONY UKŁAD I ANIMACJA)
+   12. INSTAGRAM FEED FULL-BLEED (POPRAWIONY UKŁAD)
    ========================================================================== */
 
 .instagram-section-full {
     padding: 80px 0 0 0;
     background-color: var(--bg-color);
     width: 100%;
-    clear: both; /* Zabezpieczenie przed floatami */
+    clear: both;
 }
 
 .insta-full-header {
@@ -1134,14 +1073,13 @@ body.dark-mode .article-long-wrapper .story-excerpt {
     letter-spacing: 1px;
 }
 
-/* Wymuszenie grida, aby zablokować pionowy układ z klasy article-long-wrapper */
 .insta-grid-fluid, 
 .instagram-section-full .insta-grid,
 .instagram-section-full [class*="grid"] {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
     width: 100% !important;
-    gap: 0 !important; /* Brak odstępów dla efektu full-bleed */
+    gap: 0 !important;
 }
 
 .insta-item-fluid,
@@ -1162,7 +1100,6 @@ body.dark-mode .article-long-wrapper .story-excerpt {
     transition: var(--transition) !important;
 }
 
-/* Przywrócenie pięknej płynnej animacji powiększenia i nakładki */
 .insta-item-fluid:hover img,
 .instagram-section-full .story-img-wrapper:hover img { 
     transform: scale(1.06) !important; 
@@ -1194,113 +1131,214 @@ body.dark-mode .article-long-wrapper .story-excerpt {
    13. ELEGANCKA STOPKA I NEWSLETTER (FOOTER)
    ========================================================================== */
 
-.footer-premium {
-    background-color: #0f0f0f;
-    color: #ffffff;
-    padding: 100px 0 0 0;
+/* ==========================================================================
+   NOWY, KOLUMNOWY UKŁAD STOPKI (Z WIĘKSZYMI IKONAMI)
+   ========================================================================== */
+
+footer, .site-footer, [id*="footer"] {
+    background-color: #0b0b0b !important;
+    color: #ffffff !important;
+    padding: 80px 40px 40px 40px !important;
+    font-family: 'Inter', sans-serif !important;
+    box-sizing: border-box !important;
 }
 
-.footer-premium-grid {
-    display: grid;
-    grid-template-columns: 4fr 6fr;
-    gap: 100px;
-    padding-bottom: 80px;
+/* Główny kontener dzielący stopkę na dwie duże części */
+footer .footer-container, 
+footer .footer-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    gap: 40px !important;
 }
 
-.footer-logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    font-weight: 400;
-    letter-spacing: -1px;
-    margin-bottom: 12px;
+/* LEWA STRONA: Branding, Sociale i Kontakt */
+footer .footer-left, 
+footer .footer-brand-section {
+    flex: 1 !important;
+    min-width: 280px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
 }
 
-.footer-brand-side .footer-tagline {
-    color: #888888;
-    font-size: 14px;
-    margin-bottom: 32px;
+footer .footer-logo, 
+footer h2:first-child {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 38px !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.5px !important;
+    margin: 0 0 10px 0 !important;
+    color: #ffffff !important;
+    text-align: left !important;
 }
 
-.social-links-premium {
-    display: flex;
-    gap: 24px;
+footer .footer-tagline, 
+footer .footer-logo + p {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    color: #666666 !important;
+    margin: 0 0 32px 0 !important;
+    text-align: left !important;
 }
 
-.social-links-premium a {
-    font-size: 18px;
-    color: #666666;
+/* POWIĘKSZONE IKONY SOCIAL MEDIA */
+footer .footer-socials, 
+footer .social-links,
+footer .footer-icons {
+    display: flex !important;
+    gap: 24px !important;
+    margin: 0 0 32px 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
 }
 
-.social-links-premium a:hover {
-    color: #ffffff;
-    transform: translateY(-3px);
+footer .footer-socials a, 
+footer .footer-socials i,
+footer .social-links i,
+footer [class*="fa-"] {
+    color: #ffffff !important;
+    font-size: 24px !important; /* Wyraźnie większe, luksusowe ikony */
+    text-decoration: none !important;
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
 }
 
-.footer-newsletter-side h4 {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 400;
-    margin-bottom: 12px;
+footer .footer-socials a:hover i,
+footer .social-links a:hover i {
+    opacity: 0.7 !important;
+    transform: translateY(-2px) !important;
 }
 
-.footer-newsletter-side p {
-    color: #888888;
-    font-size: 14px;
-    margin-bottom: 24px;
+/* Mail kontaktowy */
+footer .footer-contact-link,
+footer a[href^="mailto:"] {
+    color: #888888 !important;
+    font-size: 14px !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+    margin-bottom: 20px !important;
 }
 
-.premium-input-group {
-    display: flex;
-    border-bottom: 1px solid #333;
-    padding-bottom: 8px;
-    max-width: 480px;
-    margin-bottom: 30px;
+footer .footer-contact-link:hover,
+footer a[href^="mailto:"]:hover {
+    color: #ffffff !important;
 }
 
-.premium-input-group input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    padding: 8px 0;
-    font-size: 14px;
+
+/* PRAWA STRONA: Newsletter ("Dołącz do społeczności") */
+footer .footer-right, 
+footer .footer-newsletter-section {
+    flex: 1 !important;
+    min-width: 320px !important;
+    max-width: 500px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
 }
 
-.premium-input-group input:focus { 
-    outline: none; 
+footer .footer-newsletter-title, 
+footer h3, footer h4 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 24px !important;
+    font-weight: 400 !important;
+    margin: 0 0 12px 0 !important;
+    color: #ffffff !important;
+    text-align: left !important;
 }
 
-.btn-submit-premium {
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 2px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
+footer .footer-newsletter-text,
+footer .footer-newsletter-title + p {
+    font-size: 14px !important;
+    color: #888888 !important;
+    line-height: 1.6 !important;
+    margin: 0 0 24px 0 !important;
+    text-align: left !important;
 }
 
-.btn-submit-premium:hover { 
-    color: var(--accent-lime); 
+
+/* FORMULARZ (Zostaje w jednej linii z ładnym podkreśleniem) */
+footer form, 
+footer .footer-form {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 450px !important;
+    border-bottom: 1px solid #333333 !important;
+    margin: 0 !important;
 }
 
-.footer-contact-email { 
-    font-size: 13px; 
-    color: #555555; 
+footer input[type="email"], 
+footer .footer-input-email {
+    flex: 1 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+    color: #ffffff !important;
+    padding: 12px 0 !important;
+    font-size: 14px !important;
+    outline: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
 }
 
-.footer-premium-bottom {
-    border-top: 1px solid #1a1a1a;
-    padding: 30px 0;
-    font-size: 12px;
-    color: #444444;
+footer button, 
+footer input[type="submit"],
+footer .footer-btn-submit {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+    color: #ffffff !important;
+    padding: 12px 0 12px 20px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+    transition: opacity 0.3s ease !important;
 }
 
-.bottom-flex {
-    display: flex;
-    justify-content: space-between;
+
+/* DOLNA BELKA: Prawa autorskie na całej szerokości */
+footer .footer-bottom {
+    width: 100% !important;
+    border-top: 1px solid #1a1a1a !important;
+    margin-top: 60px !important;
+    padding-top: 30px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+}
+
+footer .footer-bottom p, 
+footer .footer-bottom div {
+    font-size: 12px !important;
+    color: #555555 !important;
+    margin: 0 !important;
+    text-align: left !important;
+}
+
+/* RWD: Przejście do jednej kolumny na smartfonach */
+@media (max-width: 768px) {
+    footer .footer-container, 
+    footer .footer-wrapper {
+        flex-direction: column !important;
+        gap: 50px !important;
+    }
+    footer .footer-bottom {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
 }
 
 /* ==========================================================================
@@ -1493,7 +1531,7 @@ body.dark-mode .article-long-wrapper .story-excerpt {
 }
 
 /* ==========================================================================
-   16. PAGINACJA (STRONICOWANIE PREMIUM)
+   16. PAGINACJA (STRONICOWANIE PREMIUM - DOKOŃCZONE)
    ========================================================================== */
 
 .pagination-wrapper {
@@ -1511,311 +1549,61 @@ body.dark-mode .article-long-wrapper .story-excerpt {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     color: var(--text-color);
-    padding: 8px 14px;
-    font-family: inherit;
-    font-size: 0.95rem;
+    padding: 10px 18px;
+    font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.25s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    border-radius: 0px; 
+    transition: var(--transition);
 }
 
+.pagination-btn:hover,
 .pagination-btn.active {
     background: var(--text-color);
-    border-color: var(--text-color);
     color: var(--bg-color);
-    font-weight: 600;
-}
-
-.pagination-btn.prev-next {
-    padding: 8px 18px;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    font-weight: 600;
-    gap: 8px;
-}
-
-.pagination-btn:hover:not(.active) {
     border-color: var(--text-color);
-    background: var(--hero-bg);
 }
-
-body.dark-mode .pagination-btn:hover:not(.active) {
-    background: #222;
-}
-
-.article-long .editorial-lead,
-#page-article-view .editorial-lead {
-    color: #4a4a4a !important; /* Wyrazisty, czytelny ciemnoszary kolor */
-    font-size: 1.15rem;
-    line-height: 1.6;
-    max-width: 700px;
-    margin: 0 auto 30px auto;
-    opacity: 0.9; /* Jeśli była tam ustawiona niska opasłość, to ją podnosimy */
-}
-
-/* Jeśli strona obsługuje dark mode, upewnijmy się, że tam też będzie go widać */
-body.dark-mode .article-long .editorial-lead,
-body.dark-mode #page-article-view .editorial-lead {
-    color: #e0e0e0 !important; /* Jasnoszary na ciemnym tle */
-}
-
-/* Wymuszenie koloru dla KAŻDEGO pierwszego akapitu, który wpada do widoku artykułu */
-#post-view-body p:first-of-type,
-#post-view-body .editorial-lead,
-.article-body-html p:first-child {
-    color: #333333 !important;
-    opacity: 1 !important;
-}
-
-/* Wersja dla trybu ciemnego, jeśli go używaszy */
-body.dark-mode #post-view-body p:first-of-type,
-body.dark-mode .article-body-html p:first-child {
-    color: #ffffff !important;
-    opacity: 1 !important;
-}
-
-.article-long-wrapper .story-excerpt,
-.story-excerpt {
-    color: #767676 !important; /* Wymuszamy Twój ciemny kolor z CSS */
-}
-
-/* Kontener nadrzędny dla metadanych */
-.article-meta-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px; /* Odstęp między kategorią, kropką a datą */
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-/* Styl dla kategorii */
-.article-meta-header .story-category {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #ffb6c1; /* Subtelny akcent kolorystyczny dla kategorii */
-}
-
-/* Separator (kropka) */
-.article-meta-header .meta-separator {
-    color: #666666;
-    font-size: 0.75rem;
-}
-
-/* Styl dla daty */
-.article-meta-header .story-date {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #999999; /* Przygaszony, elegancki kolor dla daty */
-}
-
-/* Zabezpieczenie dla trybu ciemnego (dark mode) */
-body.dark-mode .article-meta-header .story-date {
-    color: #b0b0b0 !important;
-}
-body.dark-mode .article-meta-header .story-category {
-    color: #ffccd5 !important;
-}
-
-/* Gwarancja wyświetlania overlay na hover dla obu wariantów klas */
-.insta-item-fluid:hover .insta-hover-overlay,
-.story-img-wrapper:hover .insta-hover-overlay,
-.instagram-section-full [class*="wrapper"]:hover .insta-hover-overlay {
-    opacity: 1 !important;
-    visibility: visible !important;
-}
-
-/* Dodatkowe zabezpieczenie: upewnijmy się, że sam overlay ma pozycjonowanie absolutne względem rodzica */
-.insta-hover-overlay {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 10 !important; /* Wyniesienie nad obrazek */
-    pointer-events: none; /* Zapobiega "migotaniu" myszki między obrazkiem a nakładką */
-}
-
 /* ==========================================================================
-   PREMIUM FOOTER STYLES
+   PORZĄDKOWANIE METADANYCH ARTYKUŁÓW (RESET KROPEK I WYRÓWNANIE DATY)
    ========================================================================== */
-.footer-premium {
-    background-color: #0b0b0b; /* Głęboka, elegancka czerń */
-    color: #ffffff;
-    padding: 80px 0 30px 0;
-    font-family: 'Inter', sans-serif;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+/* Kontener na kategorię i datę w każdym boksie */
+.stories-grid .article-meta-header,
+.stories-grid [class*="meta-header"],
+.stories-grid .story-meta {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
 }
 
-.footer-grid {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 60px;
-    margin-bottom: 60px;
-    flex-wrap: wrap;
+/* 1. USUNIĘCIE KROPKI SEPARATORA */
+/* Ukrywamy kropkę, jeśli jest osobnym elementem (np. span z klasą) */
+.stories-grid .meta-separator,
+.stories-grid .separator,
+.stories-grid span:not([class]):contains('•') {
+    display: none !important;
 }
 
-/* Lewa strona - Brand */
-.footer-brand-side {
-    flex: 1;
-    min-width: 280px;
+/* Ukrywamy kropkę, jeśli była generowana jako pseudoelement CSS */
+.stories-grid .story-category::after,
+.stories-grid [class*="category"]::after {
+    display: none !important;
+    content: "" !important;
 }
 
-.footer-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
+/* 2. WYRÓWNANIE PASKA DO PRAWEJ */
+/* Kategoria zostaje twardo po lewej stronie */
+.stories-grid .story-category,
+.stories-grid [class*="category"] {
+    text-align: left !important;
+    margin: 0 !important;
 }
 
-.footer-brand-side .section-subtitle {
-    color: #8c8c8c;
-    font-size: 0.95rem;
-    margin-bottom: 25px;
-}
-
-.footer-socials {
-    display: flex;
-    gap: 18px;
-}
-
-.footer-socials a {
-    color: #ffffff;
-    font-size: 1.2rem;
-    transition: color 0.3s ease, transform 0.3s ease;
-    opacity: 0.8;
-}
-
-.footer-socials a:hover {
-    color: #e5c1cd; /* Subtelny pastelowy róż w hoverze */
-    transform: translateY(-3px);
-    opacity: 1;
-}
-
-/* Prawa strona - Newsletter */
-.footer-newsletter-side {
-    flex: 1;
-    min-width: 320px;
-    max-width: 480px;
-}
-
-.footer-heading {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-    font-weight: 500;
-}
-
-.footer-text-muted {
-    color: #8c8c8c;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-/* Formularz Newslettera */
-.newsletter-form {
-    display: flex;
-    width: 100%;
-    margin-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    transition: border-color 0.3s ease;
-}
-
-.newsletter-form:focus-within {
-    border-color: #ffffff;
-}
-
-.newsletter-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    padding: 12px 0;
-    color: #ffffff;
-    font-size: 0.95rem;
-    font-family: inherit;
-}
-
-.newsletter-input:focus {
-    outline: none;
-}
-
-.newsletter-input::placeholder {
-    color: #555555;
-}
-
-.newsletter-submit-btn {
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-family: inherit;
-    font-weight: 500;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    padding: 12px 0 12px 20px;
-    transition: color 0.3s ease;
-}
-
-.newsletter-submit-btn:hover {
-    color: #e5c1cd;
-}
-
-.footer-contact-mail {
-    color: #8c8c8c;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-}
-
-/* Dolny pasek z prawami autorskimi */
-.footer-bottom-bar {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 30px;
-}
-
-.footer-bottom-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #555555;
-    font-size: 0.8rem;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.footer-branding-tag {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.75rem;
-}
-
-/* Responsywność */
-@media (max-width: 768px) {
-    .footer-grid {
-        flex-direction: column;
-        gap: 40px;
-    }
-    .footer-newsletter-side {
-        max-width: 100%;
-    }
-    .footer-bottom-container {
-        flex-direction: column;
-        text-align: center;
-    }
+/* Data (miesiąc i rok) zostaje wyrównana idealnie do prawej krawędzi boksu */
+.stories-grid .story-date,
+.stories-grid [class*="date"] {
+    text-align: right !important;
+    margin-left: auto !important; /* Wymusza zepchnięcie do prawej strony */
+    display: block !important;
 }
